@@ -1,25 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#" onclick="exemplares()">Exemplares</a>
+    <a class="navbar-brand" href="#" onclick="emprestimos()">Empréstimos</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#" onclick="exemplaresDisponiveis()"> Disponíveis </a>
-            </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#" onclick="exemplaresEmprestados()"> Emprestados </a>
+                <a class="nav-link" href="#" onclick="emprestimos()"> Ativos </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="exemplaresManutencao()"> Em manutenção </a>
+                <a class="nav-link" href="#" onclick="novosEmprestimos()"> Reserve agora </a>
             </li>
         </ul>
     </div>
 </nav>
 
 <div class="card sub-conteudo">
-    <div class="card-body" id="body-exemplares">
+    <div class="card-body" id="body-emprestimos">
 
         <div class="card-body" id="body-search">
 
@@ -41,7 +38,8 @@
         <div class="card livros">
             <div class="card-body">
                 <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
-                <p class="card-text">Jonathan Gomes</p>
+                <p class="card-text">Leitor: Jonathan Gomes</p>
+                <p class="card-text">Data devolução: 25/02/2020 </p>
                 <button type="button" href="#" class="btn btn-outline-primary">Finalizar empréstimo</button> <!--Abrir modal para finalizar reserva-->
                 <button type="button" href="#" class="btn btn-outline-secondary">Alterar </button> <!--Abrir modal para edição de reserva-->
             </div>
@@ -50,7 +48,8 @@
         <div class="card livros">
             <div class="card-body">
                 <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
-                <p class="card-text">Bruno Cesar</p>
+                <p class="card-text">Leitor: Bruno Cesar</p>
+                <p class="card-text">Data devolução: 25/02/2020 </p>
                 <button type="button" href="#" class="btn btn-outline-primary">Finalizar empréstimo</button> <!--Abrir modal para finalizar reserva-->
                 <button type="button" href="#" class="btn btn-outline-secondary">Alterar </button> <!--Abrir modal para edição de reserva-->
             </div>
@@ -59,7 +58,8 @@
         <div class="card livros">
             <div class="card-body">
                 <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
-                <p class="card-text">André Rodrigues</p>
+                <p class="card-text">Leitor: André Rodrigues</p>
+                <p class="card-text">Data devolução: 25/02/2020 </p>
                 <button type="button" href="#" class="btn btn-outline-primary">Finalizar empréstimo</button> <!--Abrir modal para finalizar reserva-->
                 <button type="button" href="#" class="btn btn-outline-secondary">Alterar </button> <!--Abrir modal para edição de reserva-->
             </div>

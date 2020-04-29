@@ -17,7 +17,7 @@ exemplares = function(){
 }
 
 emprestimos = function(){
-    $("#body").load("pages/webapp/emprestimos.html")
+    $("#body").load("pages/webapp/emprestimosAtivos.html")
 }
 
 leitores = function(){
@@ -50,10 +50,14 @@ exemplaresDisponiveis = function () {
     $("#body").load("pages/webapp/exemplaresDisponíveis.html")
 }
 
-exemplaresEmprestados = function () {
-    $("#body").load("pages/webapp/exemplaresEmprestados.html")
-}
-
 exemplaresManutencao = function () {
     $("#body").load("pages/webapp/exemplaresManutencao.html")
+}
+
+emprestimos = function () {
+    $("#body").load("pages/webapp/emprestimosAtivos.html")
+}
+
+novosEmprestimos = function () {
+    $("#body").load("pages/webapp/emprestimosNovos.html")
 }

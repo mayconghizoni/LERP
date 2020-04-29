@@ -13,7 +13,7 @@ cadastros = function(){
 }
 
 exemplares = function(){
-    $("#body").load("pages/webapp/exemplares.html")
+    $("#body").load("pages/webapp/exemplaresDisponíveis.html")
 }
 
 emprestimos = function(){
@@ -44,4 +44,16 @@ cadastrarCategorias = function(){
 
 cadastrarLeitores = function(){
     $("#body").load("pages/webapp/cadastrarLeitores.html")  
+}
+
+exemplaresDisponiveis = function () {
+    $("#body").load("pages/webapp/exemplaresDisponíveis.html")
+}
+
+exemplaresEmprestados = function () {
+    $("#body").load("pages/webapp/exemplaresEmprestados.html")
+}
+
+exemplaresManutencao = function () {
+    $("#body").load("pages/webapp/exemplaresManutencao.html")
 }

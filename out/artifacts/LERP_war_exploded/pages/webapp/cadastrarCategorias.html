@@ -8,7 +8,7 @@
             <li class="nav-item" >
                 <a class="nav-link" href="#" onclick="cadastrarExemplar()">Exemplar</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="#" onclick="cadastrarCategorias()">Categoria</a>
             </li>
             <li class="nav-item">
@@ -20,6 +20,13 @@
 
 <div class="card sub-conteudo">
     <div class="card-body" id="body-cadastrar">
-        <p>Cadastrar Categorias</p>
+        <form>
+            <div class="form-group">
+                <label for="inputCategoria">Nome da categoria</label>
+                <input type="text" class="form-control" id="inputCategoria" placeholder="Ação">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cadastrar categoria</button>
+        </form>
     </div>
 </div>

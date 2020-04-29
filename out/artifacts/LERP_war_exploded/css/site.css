@@ -104,7 +104,6 @@
 
   #conteudo{
     background-color: #f8f9fa;
-    height: 900px;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: 180px;
@@ -114,7 +113,6 @@
 
   .sub-conteudo{
     background-color: #f8f9fa;
-    height: 90%;
   }
 
   #body{
@@ -122,3 +120,20 @@
   }
 
   /*FIM AJUSTES BODY*/
+
+  label{
+    font-weight: bold;
+  }
+
+  #body-search{
+    display: block;
+    height: 100%;
+  }
+
+  .livros{
+    margin: 5px;
+    width: 20rem;
+    display: inline-flex;
+    float: left;
+  }
+

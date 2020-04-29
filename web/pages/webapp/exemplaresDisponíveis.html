@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" onclick="exemplares()">Exemplares</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" onclick="exemplaresDisponiveis()"> Disponíveis </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="exemplaresEmprestados()"> Emprestados </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="exemplaresManutencao()"> Em manutenção </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="card sub-conteudo">
+    <div class="card-body" id="body-exemplares">
+
+        <div class="card-body" id="body-search">
+
+            <form>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Pesquisar">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <select id="selecionarCategoria" class="form-control">
+                        <option>Selecione uma categoria</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </form>
+
+        </div>
+
+<!--        Este trecho terá que ser carregado dinamicamente com JS-->
+
+        <div class="card livros">
+            <div class="card-body">
+                <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
+                <p class="card-text">J.K. Rowling</p>
+                <button type="button" href="#" class="btn btn-outline-primary">Reserve agora</button> <!--Abrir modal para registrar-->
+                <button type="button" href="#" class="btn btn-outline-secondary">P/ Manutenção</button> <!--Abrir modal de confirmação-->
+            </div>
+        </div>
+
+        <div class="card livros">
+            <div class="card-body">
+                <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
+                <p class="card-text">J.K. Rowling</p>
+                <button type="button" href="#" class="btn btn-outline-primary">Reserve agora</button> <!--Abrir modal para registrar-->
+                <button type="button" href="#" class="btn btn-outline-secondary">P/ Manutenção</button> <!--Abrir modal de confirmação-->
+            </div>
+        </div>
+
+        <div class="card livros">
+            <div class="card-body">
+                <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
+                <p class="card-text">J.K. Rowling</p>
+                <button type="button" href="#" class="btn btn-outline-primary">Reserve agora</button> <!--Abrir modal para registrar-->
+                <button type="button" href="#" class="btn btn-outline-secondary">P/ Manutenção</button> <!--Abrir modal de confirmação-->
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>

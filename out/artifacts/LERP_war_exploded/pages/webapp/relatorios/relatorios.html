@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" onclick="relatorios()">Relatórios</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" onclick="relatorios()"> Gerar relatórios</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="card sub-conteudo">
+    <div class="card-body" id="body-emprestimos">
+
+        <form>
+            <div class="form-group">
+                <label for="inputCategoria">Tipo de relatório</label>
+                <select id="inputCategoria" class="form-control">
+                    <option>Selecione o tipo de relatório</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="dataInicio">Data Início</label>
+                    <!-- Carregado por JS -->
+                    <input class="form-control" id="dataInicio">
+                </div>
+                <div class="form-group col">
+                    <label for="dataFim">Data Fim</label>
+                    <!-- Carregado por JS -->
+                    <input class="form-control" id="dataFim">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail">Email destino</label>
+                <input type="text" class="form-control" id="inputEmail" placeholder="creuza_megafunk2009@hotmail.com">
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary">Enviar</button>
+            <button type="submit" class="btn btn-outline-secondary">Visualizar relatório</button>
+        </form>
+
+    </div>
+</div>

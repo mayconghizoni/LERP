@@ -18,13 +18,13 @@
 
 <div class="card sub-conteudo">
     <div class="card-body" id="body-cadastrar">
-        <form>
+        <form name="frmAddCategoria" id="addCategoria">
             <div class="form-group">
                 <label for="inputCategoria">Nome da categoria</label>
-                <input type="text" class="form-control" id="inputCategoria" placeholder="Ação">
+                <input type="text" class="form-control" name="inputCategoria" id="inputCategoria" placeholder="Ação">
             </div>
 
-            <button type="submit" class="btn btn-primary">Cadastrar categoria</button>
+            <button type="button" class="btn btn-primary" onclick="cadastrarNovaCategoria()">Cadastrar categoria</button>
         </form>
     </div>
 </div>

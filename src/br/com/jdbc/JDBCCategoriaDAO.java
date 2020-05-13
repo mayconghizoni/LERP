@@ -2,9 +2,9 @@ package br.com.jdbc;
 
 import br.com.modelo.Categoria;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCCategoriaDAO {
 
@@ -36,4 +36,33 @@ public class JDBCCategoriaDAO {
         }
 
     }
+
+    public List<Categoria> buscar(){
+
+        String comando = "SELECT * FROM categoria ORDER BY descricao ASC;";
+
+        List<Categoria> listaCategoria = new ArrayList<Categoria>();
+
+        Categoria categoria = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+                categoria = new Categoria();
+                categoria.setId(rs.getInt("idcategoria"));
+                categoria.setNome(rs.getString("descricao"));
+
+                listaCategoria.add(categoria);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return listaCategoria;
+    }
+
 }

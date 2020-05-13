@@ -4,11 +4,13 @@ import br.com.bd.Conexao;
 import br.com.jdbc.JDBCCategoriaDAO;
 import br.com.modelo.Categoria;
 import com.google.gson.Gson;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("categoria")
 public class CategoriaREST extends UtilRest {
@@ -40,5 +42,31 @@ public class CategoriaREST extends UtilRest {
         }
 
     }
+
+    @GET
+    @Path("buscar")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar (){
+
+        try{
+            List<Categoria> listaCategoria = new ArrayList<Categoria>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCCategoriaDAO jdbcCategoria = new JDBCCategoriaDAO(conexao);
+            listaCategoria = jdbcCategoria.buscar();
+
+            conec.fecharConexao();
+
+            return this.buildResponse(listaCategoria);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
 
 }

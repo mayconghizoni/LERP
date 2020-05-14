@@ -1,3 +1,5 @@
+LERP = new Object();
+
 $(document).ready(function(){
 
     $("#body").load("pages/webapp/home.html")

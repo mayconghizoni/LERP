@@ -5,7 +5,6 @@ cadastrarNovaCategoria = function () {
     if(categoria.nome === ""){
         alert("Preencha os campos corretamente!") // Fazer modal decente
     }else{
-        // Continua AJAX
 
         $.ajax({
             type: "POST",
@@ -16,10 +15,11 @@ cadastrarNovaCategoria = function () {
                 $("#addCategoria").trigger("reset");
             },
             error: function (info) {
-                alert("ERRO");
+                alert("Erro ao cadastrar categoria: "+info.status+" - " + info.statusText);
             }
         })
 
     }
 
 }
+

@@ -1,12 +1,13 @@
 package br.com.jdbc;
 
+import br.com.jdbcinterface.CategoriaDAO;
 import br.com.modelo.Categoria;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCCategoriaDAO {
+public class JDBCCategoriaDAO implements CategoriaDAO {
 
     private Connection conexao;
 

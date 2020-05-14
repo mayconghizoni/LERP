@@ -38,7 +38,47 @@ $(document).ready(function () {
             }
         },
         error: function (info) {
-            console.log("erro")
+            exibirAviso("Erro ao buscar categorias: "+info.status+" - " + info.statusText)
+
+            $("#inputCategoria").html("")
+            var option = document.createElement("option")
+            option.setAttribute("value", "")
+            option.innerHTML = ("Erro ao carregar categorias!")
+            $("#inputCategoria").append(option)
+            $("#inputCategoria").addClass("aviso")
         }
     })
 })
+
+cadastrarNovoExemplar = function () {
+    var exemplar = new Object();
+    exemplar.titulo = document.frmAddExemplar.inputObra.value;
+    exemplar.autor = document.frmAddExemplar.inputAutor.value;
+    exemplar.categoria = document.frmAddExemplar.inputCategoria.value;
+    exemplar.ano = document.frmAddExemplar.inputAno.value;
+    exemplar.edicao = document.frmAddExemplar.inputEdicao.value;
+
+    if(exemplar.titulo === "" ||
+    exemplar.autor === "" ||
+    exemplar.categoria === "" ||
+    exemplar.ano === "" ||
+    exemplar.edicao === ""){
+        alert("Preencha os campos corretamente!")
+    }else{
+
+        $.ajax({
+            type: "POST",
+            url: "/LERP/rest/exemplar/inserir",
+            data: JSON.stringify(exemplar),
+
+            success: function (msg) {
+                alert(msg);
+                $("#addExemplar").trigger("reset");
+            },
+            error: function (info) {
+                alert("Erro ao cadastrar exemplar: "+info.status+" - " + info.statusText);
+            }
+        })
+
+    }
+}

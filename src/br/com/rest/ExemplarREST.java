@@ -6,8 +6,11 @@ import br.com.modelo.Exemplar;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("exemplar")
 public class ExemplarREST extends UtilRest{
@@ -37,6 +40,29 @@ public class ExemplarREST extends UtilRest{
             return buildErrorResponse(e.getMessage());
         }
 
+    }
+
+    @GET
+    @Path("buscar")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar(){
+
+        try{
+
+            List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+            listaExemplares = jdbcExemplar.buscar();
+
+            return this.buildResponse(listaExemplares);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
     }
 
 

@@ -11,6 +11,15 @@ public class Exemplar implements Serializable {
     private String autor;
     private int categoria;
     private String ano;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getCategoria() {
         return categoria;

@@ -48,6 +48,7 @@ $(document).ready(function () {
             $("#inputCategoria").addClass("aviso")
         }
     })
+
 })
 
 cadastrarNovoExemplar = function () {

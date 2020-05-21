@@ -2,10 +2,11 @@ package br.com.jdbc;
 
 import br.com.jdbcinterface.ExemplarDAO;
 import br.com.modelo.Exemplar;
+import com.mysql.cj.protocol.Resultset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCExemplarDAO implements ExemplarDAO {
 
@@ -41,6 +42,44 @@ public class JDBCExemplarDAO implements ExemplarDAO {
             e.printStackTrace();
             return false;
         }
+
+    }
+
+    @Override
+    public List<Exemplar> buscar() {
+
+        String comando = "SELECT * FROM exemplares WHERE status = 1 ORDER BY titulo ASC;";
+
+        List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+        Exemplar exemplar = null;
+
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+                exemplar = new Exemplar();
+
+                exemplar.setId(rs.getInt("idexemplares"));
+                exemplar.setTitulo(rs.getString("titulo"));
+                exemplar.setAutor(rs.getString("autor"));
+                exemplar.setAno(rs.getString("ano"));
+                exemplar.setCategoria(rs.getInt("idcategoria"));
+                exemplar.setEdicao(rs.getString("edicao"));
+                exemplar.setStatus(rs.getInt("status"));
+
+                listaExemplares.add(exemplar);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return listaExemplares;
 
     }
 }

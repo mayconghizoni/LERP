@@ -2,74 +2,74 @@ LERP = new Object();
 
 $(document).ready(function(){
 
-    $("#body").load("pages/webapp/home.html")
+    $("#body").load("home/home.html")
 
 })
 
 home = function(){
-    $("#body").load("pages/webapp/home.html")  
+    $("#body").load("index.html")
 }
 
 cadastros = function(){
-    $("#body").load("pages/webapp/cadastros/cadastrarExemplar.html")
+    $("#body").load("cadastros/cadastrarExemplar.html")
 }
 
 exemplares = function(){
-    $("#body").load("pages/webapp/exemplares/exemplaresDisponíveis.html")
+    $("#body").load("exemplares/exemplaresDisponíveis.html")
 }
 
 emprestimos = function(){
-    $("#body").load("pages/webapp/emprestimos/emprestimosAtivos.html")
+    $("#body").load("emprestimos/emprestimosAtivos.html")
 }
 
 leitores = function(){
-    $("#body").load("pages/webapp/leitores/leitores.html")
+    $("#body").load("leitores/leitores.html")
 }
 
 relatorios = function(){
-    $("#body").load("pages/webapp/relatorios/relatorios.html")
+    $("#body").load("relatorios/relatorios.html")
 }
 
 perfil = function(){
-    $("#body").load("pages/webapp/perfil/perfil.html")
+    $("#body").load("perfil/perfil.html")
 }
 
 cadastrarExemplar = function(){
-    $("#body").load("pages/webapp/cadastros/cadastrarExemplar.html")
+    $("#body").load("cadastros/cadastrarExemplar.html")
 }
 
 cadastrarCategorias = function(){
-    $("#body").load("pages/webapp/cadastros/cadastrarCategorias.html")
+    $("#body").load("cadastros/cadastrarCategorias.html")
 }
 
 cadastrarLeitores = function(){
-    $("#body").load("pages/webapp/cadastros/cadastrarLeitores.html")
+    $("#body").load("cadastros/cadastrarLeitores.html")
 }
 
 exemplaresDisponiveis = function () {
-    $("#body").load("pages/webapp/exemplares/exemplaresDisponíveis.html")
+    $("#body").load("exemplares/exemplaresDisponíveis.html")
 }
 
 exemplaresManutencao = function () {
-    $("#body").load("pages/webapp/exemplares/exemplaresManutencao.html")
+    $("#body").load("exemplares/exemplaresManutencao.html")
 }
 
 emprestimos = function () {
-    $("#body").load("pages/webapp/emprestimos/emprestimosAtivos.html")
+    $("#body").load("emprestimos/emprestimosAtivos.html")
 }
 
 novosEmprestimos = function () {
-    $("#body").load("pages/webapp/emprestimos/emprestimosNovos.html")
+    $("#body").load("emprestimos/emprestimosNovos.html")
 }
 
 leitores = function () {
-    $("#body").load("pages/webapp/leitores/leitores.html")
+    $("#body").load("leitores/leitores.html")
 }
 
 leitoresDevedores = function () {
-    $("#body").load("pages/webapp/leitores/leitoresDevedores.html")
+    $("#body").load("leitores/leitoresDevedores.html")
 }
 
 relatorios = function () {
-    $("#body").load("pages/webapp/relatorios/relatorios.html")
+    $("#body").load("relatorios/relatorios.html")
 }

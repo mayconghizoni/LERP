@@ -46,7 +46,7 @@ public class ExemplarREST extends UtilRest{
     @Path("buscar")
     @Consumes("application/*")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(){
+    public Response buscar(@QueryParam("statusBusca") int param){
 
         try{
 
@@ -55,7 +55,7 @@ public class ExemplarREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
-            listaExemplares = jdbcExemplar.buscar();
+            listaExemplares = jdbcExemplar.buscar(param);
 
             return this.buildResponse(listaExemplares);
 
@@ -65,7 +65,29 @@ public class ExemplarREST extends UtilRest{
         }
     }
 
+    @PUT
+    @Path("manutencao/{id}")
+    @Consumes("application/*")
+    public Response manutencao (@PathParam("id") int id){
 
+        try{
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+            boolean retorno = jdbcExemplar.manutencao(id);
+
+            if(retorno){
+                return this.buildResponse("Exemplar em manutenção!!");
+            }else {
+                return this.buildErrorResponse("Erro enviar exemplar para manutenção!");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
 
 
 }

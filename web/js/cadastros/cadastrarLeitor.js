@@ -18,11 +18,11 @@ cadastrarNovoLeitor = function () {
             data: JSON.stringify(leitor),
 
             success: function (msg) {
-                alert(msg);
+                LERP.modalAviso(msg);
                 $("#addExemplar").trigger("reset");
             },
             error: function (info) {
-                alert("Erro ao cadastrar leitor: "+info.status+" - " + info.statusText);
+                LERP.modalAviso("Erro ao cadastrar leitor: "+info.status+" - " + info.statusText);
             }
         })
     }

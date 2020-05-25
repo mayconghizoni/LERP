@@ -46,9 +46,9 @@ public class JDBCExemplarDAO implements ExemplarDAO {
     }
 
     @Override
-    public List<Exemplar> buscar() {
+    public List<Exemplar> buscar(int statusParam) {
 
-        String comando = "SELECT * FROM exemplares WHERE status = 1 ORDER BY titulo ASC;";
+        String comando = "SELECT * FROM exemplares WHERE status =  "+statusParam+" ORDER BY titulo ASC;";
 
         List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
 
@@ -80,6 +80,31 @@ public class JDBCExemplarDAO implements ExemplarDAO {
         }
 
         return listaExemplares;
+
+    }
+
+    @Override
+    public boolean manutencao(int id) {
+
+        String comando = "UPDATE exemplares SET status=? WHERE idexemplares=?";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+
+            p.setInt(1, 3);
+            p.setInt(2, id);
+
+            p.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
 
     }
 }

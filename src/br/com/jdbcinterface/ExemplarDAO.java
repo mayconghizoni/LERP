@@ -7,6 +7,7 @@ import java.util.List;
 public interface ExemplarDAO {
 
     public boolean inserir(Exemplar exemplar);
-    public List<Exemplar> buscar();
+    public List<Exemplar> buscar(int status);
+    public boolean manutencao(int id);
 
 }

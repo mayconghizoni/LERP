@@ -38,7 +38,7 @@ $(document).ready(function () {
             }
         },
         error: function (info) {
-            exibirAviso("Erro ao buscar categorias: "+info.status+" - " + info.statusText)
+            LERP.modalAviso("Erro ao buscar categorias: "+info.status+" - " + info.statusText)
 
             $("#inputCategoria").html("")
             var option = document.createElement("option")

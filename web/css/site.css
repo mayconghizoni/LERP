@@ -149,5 +149,10 @@
     margin: 3px;
   }
 
+  #modalManutencao, #modalAviso{
+    display: none;
+  }
+
+
 
 

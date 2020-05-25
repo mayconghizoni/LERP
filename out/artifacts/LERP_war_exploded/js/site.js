@@ -4,6 +4,23 @@ $(document).ready(function(){
 
     $("#body").load("home/home.html")
 
+    LERP.modalAviso = function (aviso) {
+        var modal ={
+            title: "Mensagem",
+            height: 250,
+            width: 400,
+            modal: true,
+            buttons:{
+                "OK": function(){
+                    $(this).dialog("close");
+                }
+            }
+        }
+
+        $("#modalAviso").html(aviso)
+        $("#modalAviso").dialog(modal)
+    }
+
 })
 
 home = function(){
@@ -73,3 +90,5 @@ leitoresDevedores = function () {
 relatorios = function () {
     $("#body").load("relatorios/relatorios.html")
 }
+
+

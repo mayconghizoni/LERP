@@ -11,11 +11,11 @@ cadastrarNovaCategoria = function () {
             url: "/LERP/rest/categoria/inserir",
             data: JSON.stringify(categoria),
             success: function (msg) {
-                alert(msg);
+                LERP.modalAviso(msg);
                 $("#addCategoria").trigger("reset");
             },
             error: function (info) {
-                alert("Erro ao cadastrar categoria: "+info.status+" - " + info.statusText);
+                LERP.modalAviso("Erro ao cadastrar categoria: "+info.status+" - " + info.statusText);
             }
         })
 

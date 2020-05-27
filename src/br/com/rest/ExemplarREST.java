@@ -89,5 +89,55 @@ public class ExemplarREST extends UtilRest{
         }
     }
 
+    @DELETE
+    @Path("deletar/{id}")
+    @Consumes("application/*")
+    public Response excluir (@PathParam("id") int id){
+
+        try{
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+            boolean retorno = jdbcExemplar.deletar(id);
+
+            if(retorno){
+                return this.buildResponse("Exemplar descartado com suceso!!!");
+            }else {
+                return this.buildErrorResponse("Erro ao descartar exemplar!");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/buscarPorNome")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarPorNome(@QueryParam("valorBusca") String valorBusca){
+
+        try {
+
+            List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+            listaExemplares = jdbcExemplar.buscarPorNome(valorBusca);
+
+            conec.fecharConexao();
+
+            return this.buildResponse(listaExemplares);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
+
 
 }

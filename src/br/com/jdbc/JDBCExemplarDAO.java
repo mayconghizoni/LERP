@@ -84,6 +84,48 @@ public class JDBCExemplarDAO implements ExemplarDAO {
     }
 
     @Override
+    public List<Exemplar> buscarPorNome(String nome) {
+
+        String comando = "SELECT * FROM exemplares ";
+
+        if(!nome.equals("")) {
+            comando += "WHERE titulo LIKE '%" + nome + "%' ";
+        }
+
+        comando += "ORDER BY titulo ASC";
+
+        List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+        Exemplar exemplar = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+                exemplar = new Exemplar();
+
+                exemplar.setId(rs.getInt("idexemplares"));
+                exemplar.setTitulo(rs.getString("titulo"));
+                exemplar.setAutor(rs.getString("autor"));
+                exemplar.setAno(rs.getString("ano"));
+                exemplar.setCategoria(rs.getInt("idcategoria"));
+                exemplar.setEdicao(rs.getString("edicao"));
+                exemplar.setStatus(rs.getInt("status"));
+
+                listaExemplares.add(exemplar);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return listaExemplares;
+    }
+
+    @Override
     public boolean manutencao(int id) {
 
         String comando = "UPDATE exemplares SET status=? WHERE idexemplares=?";
@@ -106,5 +148,24 @@ public class JDBCExemplarDAO implements ExemplarDAO {
 
         return true;
 
+    }
+
+    @Override
+    public boolean deletar(int id) {
+        String comando = "DELETE FROM exemplares WHERE idexemplares = ?";
+        PreparedStatement p;
+
+        try {
+
+            p = this.conexao.prepareStatement(comando);
+            p.setInt(1, id);
+            p.execute();
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

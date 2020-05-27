@@ -2,59 +2,6 @@ LERP.exemplares = new Object();
 
 $(document).ready(function () {
 
-    LERP.exemplares.buscarCategorias = function(){
-        $.ajax({
-            type: "GET",
-            url: "/LERP/rest/categoria/buscar",
-            success: function(categorias) {
-
-                if (categorias!=""){
-
-                    //Cria opção escolha com valor vazio como padrão caso haja algo no banco de dados
-                    $("#inputCategoria").html("")
-                    var option = document.createElement("option")
-                    option.setAttribute("value", "")
-                    option.innerHTML = ("Escolha")
-                    $("#inputCategoria").append(option)
-
-                    //A cada valor encontrado no banco, cria mais uma option dentro do select
-                    for (var i = 0; i < categorias.length; i++){
-
-                        var option = document.createElement("option")
-                        option.setAttribute("value", categorias[i].id)
-
-                        option.innerHTML = (categorias[i].nome)
-                        $("#inputCategoria").append(option)
-
-                    }
-
-                }else{
-                    $("#inputCategoria").html("")
-
-                    //Caso o não tenha nenhum valor cadastrado no banco ele cria uma uma option com aviso!
-                    var option = document.createElement("option")
-                    option.setAttribute("value", "")
-                    option.innerHTML = ("Cadastre uma categoria primeiro!")
-                    $("#inputCategoria").append(option)
-                    $("#inputCategoria").addClass("aviso")
-
-                }
-            },
-            error: function (info) {
-                LERP.modalAviso("Erro ao buscar categorias: "+info.status+" - " + info.statusText)
-
-                $("#inputCategoria").html("")
-                var option = document.createElement("option")
-                option.setAttribute("value", "")
-                option.innerHTML = ("Erro ao carregar categorias!")
-                $("#inputCategoria").append(option)
-                $("#inputCategoria").addClass("aviso")
-            }
-        })
-    }
-
-    LERP.exemplares.buscarCategorias();
-
     LERP.exemplares.buscar = function(){
 
         var status = 1;
@@ -131,7 +78,7 @@ $(document).ready(function () {
                 }
             },
             close: function(){
-
+                $(this).dialog("close");
             }
         }
 
@@ -139,6 +86,31 @@ $(document).ready(function () {
 
     }
 
+    LERP.exemplares.buscarPorNome = function () {
+
+        var valorBusca = $("#campoBuscarPorNome").val();
+
+        console.log(valorBusca)
+
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/exemplar/buscarPorNome",
+            data: "valorBusca="+valorBusca,
+
+            success: function (dados) {
+
+                $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro: "+ info.status + " - " + info.statusText)
+            }
+
+
+
+        })
+
+    }
 })
 
 

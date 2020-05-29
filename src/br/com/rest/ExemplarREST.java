@@ -46,7 +46,7 @@ public class ExemplarREST extends UtilRest{
     @Path("buscar")
     @Consumes("application/*")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(@QueryParam("statusBusca") int param){
+    public Response buscar(){
 
         try{
 
@@ -55,7 +55,7 @@ public class ExemplarREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
-            listaExemplares = jdbcExemplar.buscar(param);
+            listaExemplares = jdbcExemplar.buscar();
 
             return this.buildResponse(listaExemplares);
 
@@ -66,21 +66,45 @@ public class ExemplarREST extends UtilRest{
     }
 
     @PUT
-    @Path("manutencao/{id}")
+    @Path("ativarManutencao/{id}")
     @Consumes("application/*")
-    public Response manutencao (@PathParam("id") int id){
+    public Response ativarManutencao (@PathParam("id") int id){
 
         try{
-
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
-            boolean retorno = jdbcExemplar.manutencao(id);
+
+            boolean retorno = jdbcExemplar.ativarManutencao(id);
 
             if(retorno){
                 return this.buildResponse("Exemplar em manutenção!!");
             }else {
                 return this.buildErrorResponse("Erro enviar exemplar para manutenção!");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
+    @PUT
+    @Path("desativarManutencao/{id}")
+    @Consumes("application/*")
+    public Response desativarManutencao (@PathParam("id") int id){
+
+        try{
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+
+            boolean retorno = jdbcExemplar.desativarManutencao(id);
+
+            if(retorno){
+                return this.buildResponse("Exemplar disponível!!");
+            }else {
+                return this.buildErrorResponse("Erro enviar exemplar acervo!");
             }
 
         }catch (Exception e){

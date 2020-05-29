@@ -1,6 +1,6 @@
 LERP.exemplares = new Object();
 
-$(document).ready(function () {
+$(document).ready(function ()  {
 
     LERP.exemplares.buscar = function(){
 
@@ -12,7 +12,11 @@ $(document).ready(function () {
             data: "statusBusca="+status,
             success: function(dados){
 
-                $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+                if(dados == ""){
+                    $("#listaExemplares").html("");
+                }else{
+                    $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+                }
 
             },
             error: function(info){
@@ -31,14 +35,18 @@ $(document).ready(function () {
 
             for (var i = 0; i < listaExemplares.length; i++) {
 
-                exemplar += "<div class=\"card livros\">" +
-                    "<div class=\"card-body\">" +
-                    "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
-                    "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\">Reserve agora</button>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.manutencao('"+listaExemplares[i].id+"')\">Manutenção</button>" +
-                    "</div>" +
-                    "</div>"
+                if(listaExemplares[i].status == 1){
+
+                    exemplar += "<div class=\"card livros\">" +
+                        "<div class=\"card-body\">" +
+                        "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
+                        "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\">Reserve agora</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.ativarManutencao('"+listaExemplares[i].id+"')\">Manutenção</button>" +
+                        "</div>" +
+                        "</div>"
+                }
+
             }
 
             exemplar += "</div>";
@@ -50,18 +58,17 @@ $(document).ready(function () {
 
     }
 
-    LERP.exemplares.manutencao = function(id){
+    LERP.exemplares.ativarManutencao = function(id){
 
         let modalManutencaoExemplar = {
             title: "Manutenção de exemplar",
             height: 200,
             width: 550,
-            modal: true,
             buttons:{
                 "Sim": function(){
                     $.ajax({
                         type: "PUT",
-                        url: "/LERP/rest/exemplar/manutencao/"+id,
+                        url: "/LERP/rest/exemplar/ativarManutencao/"+id,
                         success: function(msg){
                             LERP.modalAviso(msg);
                             LERP.exemplares.buscar();
@@ -96,7 +103,6 @@ $(document).ready(function () {
             type: "GET",
             url: "/LERP/rest/exemplar/buscarPorNome",
             data: "valorBusca="+valorBusca,
-
             success: function (dados) {
 
                 $("#listaExemplares").html(LERP.exemplares.exibir(dados));

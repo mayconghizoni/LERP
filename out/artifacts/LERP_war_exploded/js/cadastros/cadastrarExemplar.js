@@ -73,11 +73,11 @@ cadastrarNovoExemplar = function () {
             data: JSON.stringify(exemplar),
 
             success: function (msg) {
-                alert(msg);
+                LERP.modalAviso(msg);
                 $("#addExemplar").trigger("reset");
             },
             error: function (info) {
-                alert("Erro ao cadastrar exemplar: "+info.status+" - " + info.statusText);
+                LERP.modalAviso("Erro ao cadastrar exemplar: "+info.status+" - " + info.statusText);
             }
         })
 

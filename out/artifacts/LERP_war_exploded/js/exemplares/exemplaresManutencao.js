@@ -4,15 +4,16 @@ $(document).ready(function () {
 
     LERP.exemplares.buscar = function(){
 
-        var status = 3;
-
         $.ajax({
             type: "GET",
             url: "/LERP/rest/exemplar/buscar",
-            data: "statusBusca="+status,
             success: function(dados){
 
-                $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+                if(dados == ""){
+                    $("#listaExemplares").html("");
+                }else{
+                    $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+                }
 
             },
             error: function(info){
@@ -31,14 +32,18 @@ $(document).ready(function () {
 
             for (var i = 0; i < listaExemplares.length; i++) {
 
-                exemplar += "<div class=\"card livros\">" +
-                    "<div class=\"card-body\">" +
-                    "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
-                    "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\">Finalizar processo</button>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.excluir('"+listaExemplares[i].id+"')\">Descartar</button>" +
-                    "</div>" +
-                    "</div>"
+                if(listaExemplares[i].status == 3){
+
+                    exemplar += "<div class=\"card livros\">" +
+                        "<div class=\"card-body\">" +
+                        "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
+                        "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.exemplares.desativarManutencao('"+listaExemplares[i].id+"')\">Finalizar processo</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.excluir('"+listaExemplares[i].id+"')\">Descartar</button>" +
+                        "</div>" +
+                        "</div>"
+
+                }
             }
 
             exemplar += "</div>";
@@ -55,7 +60,6 @@ $(document).ready(function () {
             title: "Excluir exemplar",
             height: 200,
             width: 550,
-            modal: true,
             buttons:{
                 "Sim": function () {
 
@@ -64,8 +68,8 @@ $(document).ready(function () {
                         url: "/LERP/rest/exemplar/deletar/"+id,
                         success: function (msg) {
                             LERP.modalAviso(msg);
-                            LERP.exemplares.buscar();
                             $("#modalExcluirExemplar").dialog("close");
+                            LERP.exemplares.buscar();
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);
@@ -110,6 +114,41 @@ $(document).ready(function () {
 
 
         })
+
+    }
+
+    LERP.exemplares.desativarManutencao = function(id){
+
+        let modalManutencaoExemplar = {
+            title: "Manutenção de exemplar",
+            height: 200,
+            width: 550,
+            buttons:{
+                "Sim": function(){
+                    $.ajax({
+                        type: "PUT",
+                        url: "/LERP/rest/exemplar/desativarManutencao/"+id,
+                        success: function(msg){
+                            LERP.modalAviso(msg);
+                            LERP.exemplares.buscar();
+                            $("#modalManutencao").dialog("close");
+                        },
+                        error: function(info){
+                            LERP.modalAviso(info.responseText);
+                            $("#modalManutencao").dialog("close");
+                        }
+                    })
+                },
+                "Cancelar": function(){
+                    $(this).dialog("close");
+                }
+            },
+            close: function(){
+                $(this).dialog("close");
+            }
+        }
+
+        $("#modalManutencao").dialog(modalManutencaoExemplar);
 
     }
 

@@ -5,11 +5,12 @@ import br.com.jdbc.JDBCLeitorDAO;
 import br.com.modelo.Leitor;
 import com.google.gson.Gson;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("leitor")
 public class LeitorREST extends UtilRest {
@@ -38,6 +39,30 @@ public class LeitorREST extends UtilRest {
         }catch (Exception e){
             e.printStackTrace();
             return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscar")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar(){
+
+        try{
+
+            List<Leitor> listaLeitor = new ArrayList<Leitor>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            listaLeitor = jdbcLeitor.buscar();
+
+            return this.buildResponse(listaLeitor);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
         }
 
     }

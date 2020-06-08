@@ -4,12 +4,9 @@ $(document).ready(function ()  {
 
     LERP.exemplares.buscar = function(){
 
-        var status = 1;
-
         $.ajax({
             type: "GET",
             url: "/LERP/rest/exemplar/buscar",
-            data: "statusBusca="+status,
             success: function(dados){
 
                 if(dados == ""){

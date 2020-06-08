@@ -106,8 +106,8 @@
     background-color: #f8f9fa;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-right: 180px;
-    margin-left: 180px;
+    margin-right: 140px;
+    margin-left: 140px;
   }
 
 
@@ -132,7 +132,7 @@
 
   .livros{
     margin: 5px;
-    width: 26rem;
+    width: 19rem;
     display: inline-flex;
     float: left;
   }
@@ -152,6 +152,12 @@
   #modalManutencao, #modalAviso, #modalExcluirExemplar{
     display: none;
   }
+
+  .capa{
+    height: 100px;
+    width: 50px;
+  }
+
 
 
 

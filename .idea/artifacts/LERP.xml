@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="LERP:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/LERP_war_exploded</output-path>
+  <artifact type="exploded-war" name="LERP">
+    <output-path>$PROJECT_DIR$/out/artifacts/LERP</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="LERP/web/Web" />
       <element id="directory" name="WEB-INF">

@@ -14,38 +14,24 @@
 </nav>
 
 <div class="card sub-conteudo">
-    <div class="card-body" id="body-emprestimos">
+    <div class="card-body" id="body-leitores">
 
-        <div class="card livros">
-            <div class="card-body">
-                <h5 class="card-title">Abreu De Olinda</h5>
-                <p class="card-text">ID: #54125</p>
-                <p class="card-text">Fone: (47) 3455-9200</p>
-                <p class="card-text">Status: OK </p>
-                <button type="button" href="#" class="btn btn-outline-primary">Visualizar empréstimos</button> <!--Abrir modal para finalizar reserva-->
-                <button type="button" href="#" class="btn btn-outline-secondary">Alterar</button> <!--Abrir modal para edição de reserva-->
+        <div class="card-body" id="body-search">
+        <form>
+            <div class="form-group ">
+                <div class="input-group mb-3">
+                    <input id="campoBuscarPorNome" type="text" class="form-control" placeholder="Pesquisar leitor">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
             </div>
+        </form>
         </div>
-        <div class="card livros">
-            <div class="card-body">
-                <h5 class="card-title">Abreu De Olinda</h5>
-                <p class="card-text">ID: #54125</p>
-                <p class="card-text">Fone: (47) 3455-9200</p>
-                <p class="card-text">Status: OK </p>
-                <button type="button" href="#" class="btn btn-outline-primary">Visualizar empréstimos</button> <!--Abrir modal para finalizar reserva-->
-                <button type="button" href="#" class="btn btn-outline-secondary">Alterar</button> <!--Abrir modal para edição de reserva-->
-            </div>
-        </div>
-        <div class="card livros">
-            <div class="card-body">
-                <h5 class="card-title">Abreu De Olinda</h5>
-                <p class="card-text">ID: #54125</p>
-                <p class="card-text">Fone: (47) 3455-9200</p>
-                <p class="card-text">Status: OK </p>
-                <button type="button" href="#" class="btn btn-outline-primary">Visualizar empréstimos</button> <!--Abrir modal para finalizar reserva-->
-                <button type="button" href="#" class="btn btn-outline-secondary">Alterar</button> <!--Abrir modal para edição de reserva-->
-            </div>
-        </div>
+
+        <div id="listaLeitores"></div>
 
     </div>
 </div>
+
+<script src="../../js/leitores/leitores.js"></script>

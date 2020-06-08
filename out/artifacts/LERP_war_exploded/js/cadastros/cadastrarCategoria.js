@@ -2,9 +2,15 @@ cadastrarNovaCategoria = function () {
     var categoria = new Object();
     categoria.nome = document.frmAddCategoria.inputCategoria.value;
 
-    if(categoria.nome === ""){
-        alert("Preencha os campos corretamente!") // Fazer modal decente
-    }else{
+    var categoria = categoria.nome
+    var expRegCategoria = new RegExp("^[A-zÀ-ü]{3,}$")
+
+    if(!expRegCategoria.test(categoria)){
+        LERP.modalAviso("Preencha o campo Categoria.")
+        document.frmAddCategoria.inputCategoria.focus()
+        return false
+    }
+    else{
 
         $.ajax({
             type: "POST",

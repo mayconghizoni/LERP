@@ -1,4 +1,4 @@
-// LERP.exemplares = new Object();
+LERP.exemplares = new Object();
 
 $(document).ready(function () {
 

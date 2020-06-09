@@ -149,7 +149,7 @@
     margin: 3px;
   }
 
-  #modalManutencao, #modalAviso, #modalExcluirExemplar{
+  #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor{
     display: none;
   }
 

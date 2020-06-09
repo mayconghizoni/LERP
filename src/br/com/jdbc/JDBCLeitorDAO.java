@@ -80,4 +80,35 @@ public class JDBCLeitorDAO implements LeitorDAO {
 
         return listaLeitores;
     }
+
+    @Override
+    public Leitor buscarPorId(int id) {
+
+        String comando = "SELECT * FROM leitor WHERE idleitor = ?";
+        Leitor leitor = new Leitor();
+
+        try{
+
+            PreparedStatement p = this.conexao.prepareStatement(comando);
+            p.setInt(1,id);
+            ResultSet rs = p.executeQuery();
+
+            if(rs.next()){
+
+                leitor.setId(rs.getInt("idleitor"));
+                leitor.setNome(rs.getString("nome"));
+                leitor.setEmail(rs.getString("email"));
+                leitor.setCpf(rs.getString("cpf"));
+                leitor.setEndereco(rs.getString("endereco"));
+                leitor.setStatus(rs.getInt("status"));
+                leitor.setFone(rs.getString("telefone"));
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return leitor;
+    }
 }

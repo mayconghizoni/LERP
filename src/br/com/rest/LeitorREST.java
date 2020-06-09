@@ -67,5 +67,27 @@ public class LeitorREST extends UtilRest {
 
     }
 
+    @GET
+    @Path("buscarPorId")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarPorId(@QueryParam("id") int id){
+
+        try{
+
+            Leitor leitor = new Leitor();
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            leitor = jdbcLeitor.buscarPorId(id);
+
+            return this.buildResponse(leitor);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
 
 }

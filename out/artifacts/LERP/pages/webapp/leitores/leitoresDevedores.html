@@ -7,25 +7,34 @@
                 <a class="nav-link" href="#" onclick="leitores()"> Ativos</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#" onclick="LeitoresDevedores()"> Multas pendentes </a>
+                <a class="nav-link" href="#" onclick="leitoresDevedores()"> Multas pendentes </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="inativos()"> Inativos </a>
             </li>
         </ul>
     </div>
 </nav>
 
 <div class="card sub-conteudo">
-    <div class="card-body" id="body-emprestimos">
+    <div class="card-body" id="body-leitores">
 
-        <form>
-            <div class="form-group ">
-                <div class="input-group mb-3">
-                    <input id="campoBuscarPorNome" type="text" class="form-control" placeholder="Pesquisar leitor">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">Search</button>
+        <div class="card-body" id="body-search">
+            <form>
+                <div class="form-group ">
+                    <div class="input-group mb-3">
+                        <input id="campoBuscarPorNome" type="text" class="form-control" placeholder="Pesquisar leitor">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">Search</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
+        <div id="listaLeitores"></div>
 
     </div>
 </div>
+
+<script src="../../js/leitores/multasPendentes.js"></script>

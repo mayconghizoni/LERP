@@ -9,6 +9,8 @@ public interface LeitorDAO {
     public boolean inserir(Leitor leitor);
     public List<Leitor> buscar();
     public Leitor buscarPorId(int id);
-
+    public boolean alterar(Leitor leitor);
+    public boolean inativar(int id);
+    public boolean ativar(int id);
 
 }

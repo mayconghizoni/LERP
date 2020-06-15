@@ -9,6 +9,9 @@
             <li class="nav-item ">
                 <a class="nav-link" href="#" onclick="leitoresDevedores()"> Multas pendentes </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="inativos()"> Inativos </a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -34,40 +37,44 @@
     </div>
 </div>
 
-<div id="modalVisualizarLeitor" class="modalVisualizarLeitor">
-    <form name="frmVisualizaLeitor" id="editaLeitor">
+<div id="modalVisualizarEdicao" class="modalVisualizarEdicao">
+    <form name="frmVisualizaEdicao" id="editaLeitor">
 
         <div class="form-group">
-            <label for="inputId">ID</label>
-            <input type="text" class="form-control" name="id" id="inputId" disabled>
+            <label for="editaId">ID</label>
+            <input type="text" class="form-control" name="id" id="editaId" disabled>
         </div>
         <div class="form-group">
-            <label for="inputNome">Nome completo</label>
-            <input type="text" class="form-control" name="nome" id="inputNome" disabled>
+            <label for="editaNome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="editaNome" >
         </div>
         <div class="form-group">
-            <label for="inputEmail">Email</label>
-            <input type="text" class="form-control" name="email" id="inputEmail" disabled>
+            <label for="editaEmail">Email</label>
+            <input type="text" class="form-control" name="email" id="editaEmail" >
         </div>
         <div class="form-group">
-            <label for="inputFone">Telefone</label>
-            <input type="text" class="form-control" name="fone" id="inputFone" disabled>
+            <label for="editaFone">Telefone</label>
+            <input type="text" class="form-control" name="fone" id="editaFone" >
         </div>
         <div class="form-group">
 
-            <label for="inputCpf">CPF</label>
-            <input type="text" class="form-control" name="cpf" id="inputCpf" disabled>
+            <label for="editaCpf">CPF</label>
+            <input type="text" class="form-control" name="cpf" id="editaCpf" >
         </div>
         <div class="form-group">
-            <label for="inputEndereco">Endereço</label>
-            <input type="text" class="form-control" name="endereco" id="inputEndereco" disabled>
+            <label for="editaEndereco">Endereço</label>
+            <input type="text" class="form-control" name="endereco" id="editaEndereco" >
         </div>
         <div class="form-group">
-            <label for="inputStatus">Status</label>
-            <input type="text" class="form-control" name="status" id="inputStatus" disabled>
+            <label for="editaStatus">Status</label>
+            <input type="text" class="form-control" name="status" id="editaStatus" disabled>
         </div>
 
     </form>
+</div>
+
+<div id="modalInativarLeitor" class="modalInativarLeitor">
+    Deseja inativar este leitor?
 </div>
 
 <script src="../../js/leitores/leitores.js"></script>

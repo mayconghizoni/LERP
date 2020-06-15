@@ -86,6 +86,9 @@ leitores = function () {
 leitoresDevedores = function () {
     $("#body").load("leitores/leitoresDevedores.html")
 }
+inativos = function () {
+    $("#body").load("leitores/inativos.html")
+}
 
 relatorios = function () {
     $("#body").load("relatorios/relatorios.html")

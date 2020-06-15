@@ -89,5 +89,59 @@ public class LeitorREST extends UtilRest {
         }
     }
 
+    @PUT
+    @Path("alterar")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response alterar(String leitorParam){
+
+        try{
+
+            Leitor leitor = new Gson().fromJson(leitorParam, Leitor.class);
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+
+            boolean retorno = jdbcLeitor.alterar(leitor);
+
+            if (retorno){
+                return buildResponse("Leitor alterado com sucesso!");
+            }else{
+                return buildErrorResponse("Erro ao alterar leitor!");
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @PUT
+    @Path("inativar/{id}")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response inativar(@PathParam("id") int id){
+
+            try{
+
+                Conexao conec = new Conexao();
+                Connection conexao = conec.abrirConexao();
+                JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+
+                boolean retorno = jdbcLeitor.inativar(id);
+
+                if(retorno){
+                    return this.buildResponse("Leitor inativo!!!");
+                }else {
+                    return this.buildErrorResponse("Erro ao inativar leitor!");
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+                return buildErrorResponse(e.getMessage());
+            }
+
+    }
 
 }

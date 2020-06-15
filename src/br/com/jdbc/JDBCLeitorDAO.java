@@ -111,4 +111,79 @@ public class JDBCLeitorDAO implements LeitorDAO {
 
         return leitor;
     }
+
+    @Override
+    public boolean alterar(Leitor leitor) {
+
+        String comando = "UPDATE leitor SET nome=?, cpf=?, email=?, endereco=?, telefone=? WHERE idleitor=?";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+
+            p.setString(1,leitor.getNome());
+            p.setString(2,leitor.getCpf());
+            p.setString(3,leitor.getEmail());
+            p.setString(4,leitor.getEndereco());
+            p.setString(5,leitor.getFone());
+            p.setInt(6,leitor.getId());
+
+            p.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean inativar(int id) {
+
+        String comando = "UPDATE leitor SET status=? WHERE idleitor=?";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+
+            p.setInt(1, 4);
+            p.setInt(2, id);
+
+            p.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+
+    }
+
+    @Override
+    public boolean ativar(int id) {
+
+        String comando = "UPDATE leitor SET status=? WHERE idleitor=?";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+
+            p.setInt(1, 1);
+            p.setInt(2, id);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }

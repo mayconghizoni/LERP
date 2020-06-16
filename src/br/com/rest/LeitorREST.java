@@ -144,4 +144,31 @@ public class LeitorREST extends UtilRest {
 
     }
 
+    @PUT
+    @Path("ativar/{id}")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ativar(@PathParam("id") int id){
+
+        try{
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+
+            boolean retorno = jdbcLeitor.ativar(id);
+
+            if(retorno){
+                return this.buildResponse("Leitor ativo!!!");
+            }else {
+                return this.buildErrorResponse("Erro ao ativar leitor!");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
 }

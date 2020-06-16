@@ -179,6 +179,8 @@ public class JDBCLeitorDAO implements LeitorDAO {
             p.setInt(1, 1);
             p.setInt(2, id);
 
+            p.executeUpdate();
+
         }catch (SQLException e){
             e.printStackTrace();
             return false;

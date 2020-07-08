@@ -12,5 +12,6 @@ public interface LeitorDAO {
     public boolean alterar(Leitor leitor);
     public boolean inativar(int id);
     public boolean ativar(int id);
+    public List<Leitor> buscarPorNome(String valorBusca);
 
 }

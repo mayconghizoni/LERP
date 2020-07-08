@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     }
 
-    LERP.leitores.buscar()
+    LERP.leitores.buscar();
 
     LERP.leitores.visualizar = function (id) {
 
@@ -208,6 +208,31 @@ $(document).ready(function () {
         }
 
         $("#modalInativarLeitor").dialog(modalInativarLeitor);
+
+    }
+
+    LERP.leitores.buscarPorNome = function () {
+
+        var valorBusca = $("#campoBuscarPorNome").val();
+
+        console.log(valorBusca)
+
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/leitor/buscarPorNome",
+            data: "valorBusca="+valorBusca,
+            success: function (dados) {
+
+                $("#listaLeitores").html(LERP.leitores.exibir(dados));
+
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro: "+ info.status + " - " + info.statusText)
+            }
+
+
+
+        })
 
     }
 })

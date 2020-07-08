@@ -1,6 +1,7 @@
 package br.com.jdbc;
 
 import br.com.jdbcinterface.LeitorDAO;
+import br.com.modelo.Exemplar;
 import br.com.modelo.Leitor;
 
 import java.sql.*;
@@ -187,5 +188,47 @@ public class JDBCLeitorDAO implements LeitorDAO {
         }
 
         return true;
+    }
+
+    public List<Leitor> buscarPorNome(String nome) {
+
+        String comando = "SELECT * FROM leitor ";
+
+        if(!nome.equals("")) {
+            comando += "WHERE nome LIKE '%" + nome + "%' ";
+        }
+
+        comando += "ORDER BY nome ASC";
+
+        List<Leitor> listaLeitores = new ArrayList<Leitor>();
+
+        Leitor leitor = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+                leitor = new Leitor();
+
+                leitor.setId(rs.getInt("idleitor"));
+                leitor.setNome(rs.getString("nome"));
+                leitor.setFone(rs.getString("telefone"));
+                leitor.setEndereco(rs.getString("endereco"));
+                leitor.setCpf(rs.getString("cpf"));
+                leitor.setEmail(rs.getString("email"));
+                leitor.setStatus(rs.getInt("status"));
+
+                listaLeitores.add(leitor);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return listaLeitores;
+
     }
 }

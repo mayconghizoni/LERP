@@ -171,4 +171,29 @@ public class LeitorREST extends UtilRest {
 
     }
 
+    @GET
+    @Path("/buscarPorNome")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarPorNome(@QueryParam("valorBusca") String valorBusca){
+
+        try {
+
+            List<Leitor> listaLeitores = new ArrayList<Leitor>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            listaLeitores = jdbcLeitor.buscarPorNome(valorBusca);
+
+            conec.fecharConexao();
+
+            return this.buildResponse(listaLeitores);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
 }

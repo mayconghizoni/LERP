@@ -9,10 +9,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="cadastrarCategorias()">Categoria</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="#" onclick="cadastrarLeitores()">Leitores</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="#" onclick="cadastrarUsuario()"> Usuário</a>
             </li>
         </ul>
@@ -30,16 +30,16 @@
                 <input type="text" class="form-control" name="inputEmail" id="inputEmail" placeholder="luiz_borba@hotmail.com">
             </div>
             <div class="form-group">
-                <label for="inputFone">Telefone</label>
-                <input type="text" class="form-control" name="inputFone" id="inputFone" placeholder="(47) 94422-2332">
+                <label for="inputSenha">Senha</label>
+                <input type="text" class="form-control" name="inputSenha" id="inputSenha" placeholder="luiz@123">
             </div>
             <div class="form-group">
-                <label for="inputCpf">CPF</label>
-                <input type="text" class="form-control" name="inputCpf" id="inputCpf" placeholder="126.432.231-33">
+                <label for="inputConfirmaSenha">Confirme a Senha</label>
+                <input type="text" class="form-control" name="inputConfirmaSenha" id="inputConfirmaSenha" placeholder="luiz@123">
             </div>
             <div class="form-group">
-                <label for="inputEndereco">Endereço</label>
-                <input type="text" class="form-control" name="inputEndereco" id="inputEndereco" placeholder="Rua Arnaldo Cesar, nº 2012">
+                <label for="inputAcesso">Nível de acesso</label>
+                <select name="inputAcesso" id="inputAcesso" class="form-control"></select>
             </div>
 
             <button type="button" class="btn btn-primary" onclick="cadastrarNovoLeitor()">Cadastrar leitor</button>
@@ -47,4 +47,4 @@
     </div>
 </div>
 
-<script src="../../js/cadastros/cadastrarLeitor.js"></script>
+<script src="../../js/cadastros/cadastrarUsuario.js"></script>

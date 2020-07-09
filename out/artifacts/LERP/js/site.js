@@ -94,4 +94,8 @@ relatorios = function () {
     $("#body").load("relatorios/relatorios.html")
 }
 
+cadastrarUsuario = function () {
+    $("#body").load("cadastros/cadastrarUsuario.html")
+}
+
 

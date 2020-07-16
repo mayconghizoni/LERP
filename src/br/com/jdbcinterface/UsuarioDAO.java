@@ -7,5 +7,7 @@ import java.util.List;
 public interface UsuarioDAO {
 
     public List<Usuario> buscar();
+    public boolean inserir(Usuario usuario);
+    public boolean validarLogin(String usuario, String senha);
     
 }

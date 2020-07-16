@@ -10,6 +10,15 @@ public class Usuario implements Serializable {
     private String nome;
     private String senha;
     private String email;
+    private int acesso;
+
+    public int getAcesso() {
+        return acesso;
+    }
+
+    public void setAcesso(int acesso) {
+        this.acesso = acesso;
+    }
 
     public int getId() {
         return id;

@@ -4,6 +4,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import com.google.gson.Gson;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.util.Base64;
+
 public class UtilRest {
 	
 	/*  Abaxio o metodo responsavel por enviar a resposta ao cliente sobre a transação realizada 
@@ -60,6 +64,31 @@ public class UtilRest {
 		
 		return rb.build();
 		
+	}
+
+	public static String criptografar(String senha){
+
+		try{
+
+			byte[] decodedBytes = Base64.getDecoder().decode(senha);
+			String decodedString = new String(decodedBytes);
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(decodedString.getBytes());
+			byte[] codificado = md.digest();
+			BigInteger hex = new BigInteger(1, codificado);
+			String hashMD5 = hex.toString(16);
+			while (hashMD5.length() < 32) {
+				hashMD5 = 0 + hashMD5;
+			}
+
+			return hashMD5;
+
+		}catch (Exception e){
+			e.printStackTrace();
+			return "Erro!";
+		}
+
 	}
 
 }

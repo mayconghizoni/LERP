@@ -3,11 +3,9 @@ package br.com.rest;
 import br.com.bd.Conexao;
 import br.com.jdbc.JDBCUsuarioDAO;
 import br.com.modelo.Usuario;
+import com.google.gson.Gson;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
@@ -41,6 +39,36 @@ public class UsuarioREST extends UtilRest{
 
     }
 
+    @POST
+    @Path("inserir")
+    @Consumes("application/*")
+    public Response inserir (String usuarioParam){
 
+        try{
+
+            Usuario usuario = new Gson().fromJson(usuarioParam, Usuario.class);
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
+
+            //INICIO CRIPTOGRAFIA
+            usuario.setSenha(criptografar(usuario.getSenha()));
+
+            boolean retorno = jdbcUsuario.inserir(usuario);
+
+            conec.fecharConexao();
+
+            if(retorno){
+                return this.buildResponse("Usuário cadastrado com sucesso!");
+            }else {
+                return this.buildResponse("Erro ao cadastrar usuário.");
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
 
 }

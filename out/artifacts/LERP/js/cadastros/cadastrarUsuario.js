@@ -49,4 +49,62 @@ $(document).ready(function () {
         }
     })
 
+    cadastrarNovoUsuario = function () {
+
+        var usuario = new Object()
+
+        usuario.nome = document.frmAddUsuario.inputNome.value;
+        usuario.email = document.frmAddUsuario.inputEmail.value;
+        usuario.senha = document.frmAddUsuario.inputSenha.value;
+        usuario.acesso = document.frmAddUsuario.inputAcesso.value;
+
+        if(usuario.nome == ""){
+            alert("Preencha o campo Nome.")
+            document.frmAddUsuario.inputNome.focus()
+            return false
+        }
+        else if(usuario.email == ""){
+            alert("Preencha o campo Email.")
+            document.frmAddUsuario.inputEmail.focus()
+            return false
+        }
+        else if(usuario.senha == ""){
+            alert("Preencha o campo Senha.")
+            document.frmAddUsuario.inputSenha.focus()
+            return false
+        }
+        else if(usuario.acesso == ""){
+            alert("Preencha o campo Nível de acesso.")
+            document.frmAddUsuario.inputAcesso.focus()
+            return false
+        }
+        else if(usuario.senha != document.frmAddUsuario.inputConfirmaSenha.value){
+            alert("As senhas não coincidem, preencha o campo novamente. ")
+            document.frmAddUsuario.inputSenha.focus()
+            return false
+        }
+        else{
+
+            //Criptografa senha em base64
+            usuario.senha = btoa(usuario.senha);
+
+            $.ajax({
+                type: "POST",
+                url: "/LERP/rest/usuario/inserir",
+                data: JSON.stringify(usuario),
+
+                success: function (msg) {
+                    $("#addUsuario").trigger("reset");
+                    LERP.modalAviso(msg);
+
+                },
+                error: function (info) {
+                    LERP.modalAviso("Erro ao cadastrar usuário: "+info.status+" - " + info.statusText);
+                }
+            })
+
+        }
+
+    }
+
 })

@@ -20,7 +20,7 @@
 </nav>
 <div class="card sub-conteudo">
     <div class="card-body" id="body-cadastrar">
-        <form name="frmAddLeitor" id="addLeitor">
+        <form name="frmAddUsuario" id="addUsuario">
             <div class="form-group">
                 <label for="inputNome">Nome completo</label>
                 <input type="text" class="form-control" name="inputNome" id="inputNome" placeholder="Luiz Borba">
@@ -31,18 +31,18 @@
             </div>
             <div class="form-group">
                 <label for="inputSenha">Senha</label>
-                <input type="text" class="form-control" name="inputSenha" id="inputSenha" placeholder="luiz@123">
+                <input type="password" class="form-control" name="inputSenha" id="inputSenha" placeholder="luiz@123">
             </div>
             <div class="form-group">
                 <label for="inputConfirmaSenha">Confirme a Senha</label>
-                <input type="text" class="form-control" name="inputConfirmaSenha" id="inputConfirmaSenha" placeholder="luiz@123">
+                <input type="password" class="form-control" name="inputConfirmaSenha" id="inputConfirmaSenha" placeholder="luiz@123">
             </div>
             <div class="form-group">
                 <label for="inputAcesso">Nível de acesso</label>
                 <select name="inputAcesso" id="inputAcesso" class="form-control"></select>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="cadastrarNovoLeitor()">Cadastrar leitor</button>
+            <button type="button" class="btn btn-primary" onclick="cadastrarNovoUsuario()">Cadastrar usuário</button>
         </form>
     </div>
 </div>

@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.Connection;
-import java.util.Base64;
 
 public class LoginServlet extends HttpServlet {
 

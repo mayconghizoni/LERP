@@ -38,7 +38,7 @@ $(document).ready(function () {
                     "<h5 class=\"card-title\"> Nome: " + listaUsuario[i].nome + "</h5>" +
                     "<p class=\"card-text\"> ID de usuário: #"+ listaUsuario[i].id + "</p>" +
                     "<p class=\"card-text\"> Email: " + listaUsuario[i].email + "</p>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\">Alterar informações</button>" +
+                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.usuario.atualizar('"+listaUsuario[i].id+"')\"Alterar informações</button>" +
                     "</div>" +
                     "</div>"
 
@@ -49,6 +49,24 @@ $(document).ready(function () {
         }
 
         return leitor;
+
+    }
+
+    LERP.usuario.atualizar = function (id) {
+
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/usuario/buscarPorId",
+            data: "id="+id,
+            success: function(usuario) {
+
+                //CONTINUAR
+
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro ao buscar usuário: " + info.status + " - " + info.statusText);
+            }
+        })
 
     }
 

@@ -97,4 +97,60 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
 
         return false;
     }
+
+    @Override
+    public Usuario buscarPorId(int id) {
+
+        String comando = "SELECT * FROM usuario WHERE idusuario = ?";
+        Usuario usuario = new Usuario();
+
+        try{
+
+            PreparedStatement p = this.conexao.prepareStatement(comando);
+            p.setInt(1, id);
+            ResultSet rs = p.executeQuery();
+
+            if(rs.next()){
+
+                usuario.setId(rs.getInt("idusuario"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setAcesso(rs.getInt("idacesso"));
+
+            }
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return usuario;
+    }
+
+    @Override
+    public boolean alterar(Usuario usuario) {
+
+        String comando = "UPDATE usuario SET nome=?, email=?, senha=? WHERE idusuario=?";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+
+            p.setString(1, usuario.getNome());
+            p.setString(2,usuario.getEmail());
+            p.setString(3,usuario.getSenha());
+            p.setInt(4,usuario.getId());
+
+            p.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }

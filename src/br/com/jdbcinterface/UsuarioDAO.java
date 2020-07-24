@@ -9,5 +9,6 @@ public interface UsuarioDAO {
     public List<Usuario> buscar();
     public boolean inserir(Usuario usuario);
     public boolean validarLogin(String usuario, String senha);
-    
+    public Usuario buscarPorId(int id);
+    public boolean alterar(Usuario usuario);
 }

@@ -23,6 +23,8 @@ $(document).ready(function(){
 
 })
 
+
+
 home = function(){
     $("#body").load("index.html")
 }

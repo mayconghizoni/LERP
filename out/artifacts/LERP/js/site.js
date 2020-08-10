@@ -2,6 +2,35 @@ LERP = new Object();
 
 $(document).ready(function(){
 
+    LERP.buscarLogado = function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/usuario/buscarLogado",
+            success: function (dados) {
+
+                if (dados == "") {
+                    console.log("erro")
+                } else {
+                   LERP.telasExibidas(dados)
+                }
+
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro ao buscar usuário logado: " + info.status + " - " + info.statusText);
+            }
+        })
+
+    }
+
+    LERP.buscarLogado();
+
+    LERP.telasExibidas = function(dados){
+        if(dados.acesso != 1){
+            $('#usuarios').remove()
+        }
+    }
+
     $("#body").load("home/home.html")
 
     LERP.modalAviso = function (aviso) {
@@ -50,7 +79,15 @@ relatorios = function(){
 }
 
 perfil = function(){
-    $("#body").load("perfil/perfil.html")
+    $("#body").load("perfil/seuPerfil.html")
+}
+
+usuarios = function(){
+    $("#body").load("usuarios/perfil.html")
+}
+
+perfilInativo = function(){
+    $("#body").load("usuarios/usuariosInativos.html")
 }
 
 cadastrarExemplar = function(){

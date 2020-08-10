@@ -11,6 +11,15 @@ public class Usuario implements Serializable {
     private String senha;
     private String email;
     private int acesso;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getAcesso() {
         return acesso;

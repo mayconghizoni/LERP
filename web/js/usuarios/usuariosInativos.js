@@ -2,7 +2,7 @@ LERP.usuario = new Object();
 
 $(document).ready(function () {
 
-    LERP.usuario.buscar = function () {
+    LERP.perfil.buscar = function () {
 
         $.ajax({
             type: "GET",
@@ -12,7 +12,7 @@ $(document).ready(function () {
                 if (dados == "") {
                     $("#listaUsuario").html("");
                 } else {
-                    $("#listaUsuario").html(LERP.usuario.exibir(dados));
+                    $("#listaUsuario").html(LERP.perfil.exibir(dados));
                 }
 
             },
@@ -23,30 +23,30 @@ $(document).ready(function () {
 
     }
 
-    LERP.usuario.buscar();
+    LERP.perfil.buscar();
 
-    LERP.usuario.exibir = function(listaUsuario) {
+    LERP.perfil.exibir = function(listaUsuario) {
 
         if(listaUsuario != undefined && listaUsuario.length > 0 ) {
 
             var leitor = "<div>";
 
-                for (var i = 0; i < listaUsuario.length; i++) {
+            for (var i = 0; i < listaUsuario.length; i++) {
 
-                    if(listaUsuario[i].status == 0){
+                if(listaUsuario[i].status == 1){
 
-                        leitor += "<div class=\"card livros\">" +
-                            "<div class=\"card-body\">" +
-                            "<h5 class=\"card-title\"> Nome: " + listaUsuario[i].nome + "</h5>" +
-                            "<p class=\"card-text\"> ID de usuário: #"+ listaUsuario[i].id + "</p>" +
-                            "<p class=\"card-text\"> Email: " + listaUsuario[i].email + "</p>" +
-                            "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.usuario.atualizar('"+listaUsuario[i].id+"')\">Alterar informações</button>" +
-                            "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.usuario.inativar('"+listaUsuario[i].id+"')\">Inativar</button>" +
-                            "</div>" +
-                            "</div>"
-                    }
-
+                    leitor += "<div class=\"card livros\">" +
+                        "<div class=\"card-body\">" +
+                        "<h5 class=\"card-title\"> Nome: " + listaUsuario[i].nome + "</h5>" +
+                        "<p class=\"card-text\"> ID de usuário: #"+ listaUsuario[i].id + "</p>" +
+                        "<p class=\"card-text\"> Email: " + listaUsuario[i].email + "</p>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.perfil.atualizar('"+listaUsuario[i].id+"')\">Alterar informações</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.perfil.ativar('"+listaUsuario[i].id+"')\">Ativar</button>" +
+                        "</div>" +
+                        "</div>"
                 }
+
+            }
 
             leitor += "</div>";
 
@@ -56,7 +56,7 @@ $(document).ready(function () {
 
     }
 
-    LERP.usuario.atualizar = function (id) {
+    LERP.perfil.atualizar = function (id) {
 
         $.ajax({
             type: "GET",
@@ -74,7 +74,7 @@ $(document).ready(function () {
                     width: 500,
                     buttons:{
                         "Salvar alterações" : function () {
-                            LERP.usuario.editar()
+                            LERP.perfil.editar()
                             $(this).dialog("close")
                         },
                         "Fechar": function(){
@@ -96,7 +96,7 @@ $(document).ready(function () {
 
     }
 
-    LERP.usuario.editar = function () {
+    LERP.perfil.editar = function () {
 
         var usuario = new Object()
 
@@ -115,6 +115,11 @@ $(document).ready(function () {
             document.frmVisualizaEdicao.email.focus()
             return false
         }
+        else if (usuario.senha == ""){
+            alert("Preencha o campo Senha.")
+            document.frmVisualizaEdicao.senha.focus()
+            return false
+        }
         else if (document.frmVisualizaEdicao.confirmaSenha.value != usuario.senha){
             alert("As senhas digitadas não correspondem.")
             document.frmVisualizaEdicao.confirmaSenha.focus()
@@ -130,21 +135,21 @@ $(document).ready(function () {
                 data: JSON.stringify(usuario),
                 success: function (msg) {
                     LERP.modalAviso(msg);
-                    LERP.usuario.buscar()
+                    LERP.perfil.buscar()
                     $("#editaUsuario").trigger("reset");
                 },
                 error: function (info) {
-                    LERP.modalAviso("Erro ao alterar usuario: "+info.status+" - " + info.statusText);
+                    LERP.modalAviso("Erro ao alterar perfil: "+info.status+" - " + info.statusText);
                 }
             })
         }
 
     }
 
-    LERP.usuario.inativar = function (id) {
+    LERP.perfil.ativar = function (id) {
 
-        var modalInativarUsuario = {
-            title: "Inativar Usuário",
+        var modalAtivarUsuario = {
+            title: "Ativar Usuário",
             height: 200,
             width: 550,
             buttons:{
@@ -152,15 +157,15 @@ $(document).ready(function () {
 
                     $.ajax({
                         type: "PUT",
-                        url: "/LERP/rest/usuario/inativar/"+id,
+                        url: "/LERP/rest/usuario/ativar/"+id,
                         success: function (msg) {
                             LERP.modalAviso(msg);
-                            $("#modalInativarUsuario").dialog("close");
-                            LERP.usuario.buscar();
+                            $("#modalAtivarUsuario").dialog("close");
+                            LERP.perfil.buscar();
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);
-                            $("#modalInativarUsuario").dialog("close");
+                            $("#modalAtivarUsuario").dialog("close");
                         }
                     })
 
@@ -174,7 +179,7 @@ $(document).ready(function () {
             }
         }
 
-        $("#modalInativarUsuario").dialog(modalInativarUsuario);
+        $("#modalAtivarUsuario").dialog(modalAtivarUsuario);
     }
 
 })

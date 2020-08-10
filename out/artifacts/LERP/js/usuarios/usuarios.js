@@ -31,19 +31,22 @@ $(document).ready(function () {
 
             var leitor = "<div>";
 
-            for (var i = 0; i < listaUsuario.length; i++) {
+                for (var i = 0; i < listaUsuario.length; i++) {
 
-                leitor += "<div class=\"card livros\">" +
-                    "<div class=\"card-body\">" +
-                    "<h5 class=\"card-title\"> Nome: " + listaUsuario[i].nome + "</h5>" +
-                    "<p class=\"card-text\"> ID de usuário: #"+ listaUsuario[i].id + "</p>" +
-                    "<p class=\"card-text\"> Email: " + listaUsuario[i].email + "</p>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.usuario.atualizar('"+listaUsuario[i].id+"')\">Alterar informações</button>" +
-                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.usuario.inativar('"+listaUsuario[i].id+"')\">Inativar</button>" +
-                    "</div>" +
-                    "</div>"
+                    if(listaUsuario[i].status == 0){
 
-            }
+                        leitor += "<div class=\"card livros\">" +
+                            "<div class=\"card-body\">" +
+                            "<h5 class=\"card-title\"> Nome: " + listaUsuario[i].nome + "</h5>" +
+                            "<p class=\"card-text\"> ID de usuário: #"+ listaUsuario[i].id + "</p>" +
+                            "<p class=\"card-text\"> Email: " + listaUsuario[i].email + "</p>" +
+                            "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.usuario.atualizar('"+listaUsuario[i].id+"')\">Alterar informações</button>" +
+                            "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.usuario.inativar('"+listaUsuario[i].id+"')\">Inativar</button>" +
+                            "</div>" +
+                            "</div>"
+                    }
+
+                }
 
             leitor += "</div>";
 
@@ -112,11 +115,6 @@ $(document).ready(function () {
             document.frmVisualizaEdicao.email.focus()
             return false
         }
-        else if (usuario.senha == ""){
-            alert("Preencha o campo Senha.")
-            document.frmVisualizaEdicao.senha.focus()
-            return false
-        }
         else if (document.frmVisualizaEdicao.confirmaSenha.value != usuario.senha){
             alert("As senhas digitadas não correspondem.")
             document.frmVisualizaEdicao.confirmaSenha.focus()
@@ -133,6 +131,7 @@ $(document).ready(function () {
                 success: function (msg) {
                     LERP.modalAviso(msg);
                     LERP.usuario.buscar()
+                    $("#editaUsuario").trigger("reset");
                 },
                 error: function (info) {
                     LERP.modalAviso("Erro ao alterar usuario: "+info.status+" - " + info.statusText);
@@ -140,6 +139,42 @@ $(document).ready(function () {
             })
         }
 
+    }
+
+    LERP.usuario.inativar = function (id) {
+
+        var modalInativarUsuario = {
+            title: "Inativar Usuário",
+            height: 200,
+            width: 550,
+            buttons:{
+                "Sim": function () {
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/LERP/rest/usuario/inativar/"+id,
+                        success: function (msg) {
+                            LERP.modalAviso(msg);
+                            $("#modalInativarUsuario").dialog("close");
+                            LERP.usuario.buscar();
+                        },
+                        error: function (info) {
+                            LERP.modalAviso(info.responseText);
+                            $("#modalInativarUsuario").dialog("close");
+                        }
+                    })
+
+                },
+                "Cancelar": function () {
+                    $(this).dialog("close");
+                }
+            },
+            close: function(){
+                $(this).dialog("close");
+            }
+        }
+
+        $("#modalInativarUsuario").dialog(modalInativarUsuario);
     }
 
 })

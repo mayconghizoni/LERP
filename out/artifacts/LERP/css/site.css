@@ -138,7 +138,7 @@
   }
 
   .alerta{
-    color: red;
+    color: #ff0000;
   }
 
   .identificador {
@@ -149,7 +149,7 @@
     margin: 3px;
   }
 
-  #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor, #modalVisualizarEdicao, #modalInativarLeitor, #modalAtivarLeitor{
+  #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor, #modalVisualizarEdicao, #modalInativarLeitor, #modalAtivarLeitor, #modalInativarUsuario, #modalAtivarUsuario{
     display: none;
   }
 

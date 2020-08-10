@@ -163,6 +163,7 @@ $(document).ready(function () {
                 success: function (msg) {
                     LERP.leitores.buscar()
                     LERP.modalAviso(msg);
+                    $("#editaLeitor").trigger("reset");
 
                 },
                 error: function (info) {

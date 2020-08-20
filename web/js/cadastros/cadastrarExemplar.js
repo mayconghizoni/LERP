@@ -1,3 +1,5 @@
+LERP.cadastros = new Object()
+
 $(document).ready(function () {
 
     $.ajax({
@@ -48,6 +50,35 @@ $(document).ready(function () {
             $("#inputCategoria").addClass("aviso")
         }
     })
+
+    LERP.cadastros.buscarLogado = function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/usuario/buscarLogado",
+            success: function (dados) {
+
+                if (dados == "") {
+                    console.log("erro")
+                } else {
+                    LERP.telasExibidas(dados)
+                }
+
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro ao buscar usuário logado: " + info.status + " - " + info.statusText);
+            }
+        })
+
+    }
+
+    LERP.cadastros.buscarLogado()
+
+    LERP.telasExibidas = function(dados){
+        if(dados.acesso != 1){
+            $('#cadastrarUsuario').remove()
+        }
+    }
 
 })
 

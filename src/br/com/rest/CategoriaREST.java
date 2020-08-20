@@ -18,6 +18,7 @@ public class CategoriaREST extends UtilRest {
     @POST
     @Path("inserir")
     @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response inserir (String categoriaParam){
 
         try{

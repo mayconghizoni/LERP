@@ -149,7 +149,7 @@
     margin: 3px;
   }
 
-  #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor, #modalVisualizarEdicao, #modalInativarLeitor, #modalAtivarLeitor, #modalInativarUsuario, #modalAtivarUsuario{
+  #modalCadastroEmprestimo, #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor, #modalVisualizarEdicao, #modalInativarLeitor, #modalAtivarLeitor, #modalInativarUsuario, #modalAtivarUsuario{
     display: none;
   }
 

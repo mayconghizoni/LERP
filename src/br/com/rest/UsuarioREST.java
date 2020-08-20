@@ -35,6 +35,7 @@ public class UsuarioREST extends UtilRest{
             Connection conexao = conec.abrirConexao();
             JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
             listaUsuario = jdbcUsuario.buscar();
+            conec.fecharConexao();
 
             return this.buildResponse(listaUsuario);
 
@@ -58,6 +59,7 @@ public class UsuarioREST extends UtilRest{
             Connection conexao = conec.abrirConexao();
             JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
             usuario = jdbcUsuario.buscarPorId(id);
+            conec.fecharConexao();
 
             return this.buildResponse(usuario);
 
@@ -83,8 +85,8 @@ public class UsuarioREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-            Usuario usuario = new Usuario();
-            usuario = jdbcUsuario.buscarPorId(id);
+            Usuario usuario = jdbcUsuario.buscarPorId(id);
+            conec.fecharConexao();
 
             return this.buildResponse(usuario);
 
@@ -145,6 +147,8 @@ public class UsuarioREST extends UtilRest{
 
             boolean retorno = jdbcUsuario.alterar(usuario);
 
+            conec.fecharConexao();
+
             if (retorno){
                 return buildResponse("Usuário alterado com sucesso!");
             }else{
@@ -172,6 +176,8 @@ public class UsuarioREST extends UtilRest{
 
             boolean retorno = jdbcUsuario.inativar(id);
 
+            conec.fecharConexao();
+
             if(retorno){
                 return this.buildResponse("Usuário inativo!!!");
             }else {
@@ -198,6 +204,8 @@ public class UsuarioREST extends UtilRest{
             JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
 
             boolean retorno = jdbcUsuario.ativar(id);
+
+            conec.fecharConexao();
 
             if(retorno){
                 return this.buildResponse("Usuário ativo!!!");

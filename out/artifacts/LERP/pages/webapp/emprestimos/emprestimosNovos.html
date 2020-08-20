@@ -16,19 +16,21 @@
 <div class="card sub-conteudo">
     <div class="card-body" id="body-emprestimos">
 
-        <form>
+        <form name="frmAddEmprestimo" id="addEmprestimo">
             <div class="form-group">
                 <label for="inputIdLivro">ID do Exemplar</label>
-                <input type="text" class="form-control" id="inputIdLivro" placeholder="#019212">
+                <input type="text" class="form-control" id="inputIdLivro" name="inputIdLivro" placeholder="#019212">
             </div>
             <div class="form-group">
                 <label for="inputIdLeitor">ID do Leitor</label>
-                <input type="text" class="form-control" id="inputIdLeitor" placeholder="#12390">
+                <input type="text" class="form-control" id="inputIdLeitor" name="inputIdLeitor" placeholder="#12390">
             </div>
 
-            <button type="submit" class="btn btn-primary">Cadastrar reserva</button>
+            <button type="button" class="btn btn-primary" onclick="LERP.emprestimos.cadastrarEmprestimo()">Cadastrar reserva</button>
 
         </form>
 
     </div>
 </div>
+
+<script src="../../js/emprestimos/emprestimosNovos.js"></script>

@@ -10,9 +10,10 @@ $(document).ready(function(){
             success: function (dados) {
 
                 if (dados == "") {
-                    console.log("erro")
+
                 } else {
-                   LERP.telasExibidas(dados)
+                    LERP.telasExibidas(dados)
+                    $("#exibirLogado").html(LERP.exibirLogado(dados));
                 }
 
             },
@@ -29,6 +30,15 @@ $(document).ready(function(){
         if(dados.acesso != 1){
             $('#usuarios').remove()
         }
+    }
+
+    LERP.exibirLogado = function(dados){
+
+        var usuario = "<li class=\'nav-item\'>"+
+            "<a class='nav-link' href='#'>"+dados.nome+"</a>" +
+            "</li>"
+
+        return usuario;
     }
 
     $("#body").load("home/home.html")

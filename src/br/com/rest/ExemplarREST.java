@@ -1,6 +1,7 @@
 package br.com.rest;
 
 import br.com.bd.Conexao;
+import br.com.jdbc.JDBCEmprestimoDAO;
 import br.com.jdbc.JDBCExemplarDAO;
 import br.com.modelo.Exemplar;
 import com.google.gson.Gson;
@@ -161,7 +162,5 @@ public class ExemplarREST extends UtilRest{
             return this.buildErrorResponse(e.getMessage());
         }
     }
-
-
 
 }

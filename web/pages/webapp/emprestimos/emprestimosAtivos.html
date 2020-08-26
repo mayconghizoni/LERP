@@ -32,37 +32,15 @@
 
         </div>
 
-        <!--        Este trecho terá que ser carregado dinamicamente com JS-->
-
-        <div class="card livros">
-            <div class="card-body">
-                <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
-                <p class="card-text">Leitor: Jonathan Gomes</p>
-                <p class="card-text">Data devolução: 25/02/2020 </p>
-                <button type="button" href="#" class="btn btn-outline-primary">Finalizar empréstimo</button> <!--Abrir modal para finalizar reserva-->
-                <button type="button" href="#" class="btn btn-outline-secondary">Alterar </button> <!--Abrir modal para edição de reserva-->
-            </div>
-        </div>
-
-        <div class="card livros">
-            <div class="card-body">
-                <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
-                <p class="card-text">Leitor: Bruno Cesar</p>
-                <p class="card-text">Data devolução: 25/02/2020 </p>
-                <button type="button" href="#" class="btn btn-outline-primary">Finalizar empréstimo</button> <!--Abrir modal para finalizar reserva-->
-                <button type="button" href="#" class="btn btn-outline-secondary">Alterar </button> <!--Abrir modal para edição de reserva-->
-            </div>
-        </div>
-
-        <div class="card livros">
-            <div class="card-body">
-                <h5 class="card-title">Harry Potter e o Prisioneiro de Azkaban</h5>
-                <p class="card-text">Leitor: André Rodrigues</p>
-                <p class="card-text">Data devolução: 25/02/2020 </p>
-                <button type="button" href="#" class="btn btn-outline-primary">Finalizar empréstimo</button> <!--Abrir modal para finalizar reserva-->
-                <button type="button" href="#" class="btn btn-outline-secondary">Alterar </button> <!--Abrir modal para edição de reserva-->
-            </div>
-        </div>
+        <div id="listaEmprestimos"></div>
 
     </div>
 </div>
+
+<div id="modalEmprestimo">
+    <p>
+        Deseja finalizar esse empréstimo?
+    </p>
+</div>
+
+<script src="../../js/emprestimos/emprestimosAtivos.js"></script>

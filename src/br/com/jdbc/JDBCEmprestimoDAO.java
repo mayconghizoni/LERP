@@ -4,6 +4,8 @@ import br.com.jdbcinterface.EmprestimoDAO;
 import br.com.modelo.Emprestimo;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCEmprestimoDAO implements EmprestimoDAO {
     private Connection conexao;
@@ -25,7 +27,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 
             p.setInt(1, emprestimo.getIdLeitor());
             p.setInt(2, emprestimo.getIdLivro());
-            p.setString(3, emprestimo.getDataSaída());
+            p.setString(3, emprestimo.getDataSaida());
 
             p.execute();
 
@@ -79,5 +81,63 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
         }
 
         return false;
+    }
+
+    @Override
+    public List<Emprestimo> buscar() {
+
+        String comando = "SELECT emp.*, l.nome, ex.titulo  FROM emprestimos as emp INNER JOIN leitor as l on leitor_idleitor = idleitor inner join exemplares as ex on exemplar_idexemplar = idexemplares ORDER BY dataSaida ASC;";
+
+        List<Emprestimo> listaEmprestimos = new ArrayList<Emprestimo>();
+
+        Emprestimo emprestimo = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while (rs.next()){
+
+                emprestimo = new Emprestimo();
+
+                emprestimo.setId(rs.getInt("idemprestimos"));
+                emprestimo.setIdLivro(rs.getInt("exemplar_idexemplar"));
+                emprestimo.setIdLeitor(rs.getInt("leitor_idleitor"));
+                emprestimo.setDataSaida(rs.getString("dataSaida"));
+                emprestimo.setValorMulta(rs.getDouble("multaArrecadada"));
+                emprestimo.setNomeLeitor(rs.getString("nome"));
+                emprestimo.setTituloExemplar(rs.getString("titulo"));
+
+                listaEmprestimos.add(emprestimo);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaEmprestimos;
+
+    }
+
+    @Override
+    public boolean finalizar(int id) {
+        String comando = "DELETE FROM emprestimos WHERE idemprestimos = ?;";
+        PreparedStatement p;
+
+        try {
+
+            p = this.conexao.prepareStatement(comando);
+            p.setInt(1, id);
+            p.execute();
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+
     }
 }

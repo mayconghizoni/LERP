@@ -9,8 +9,34 @@ public class Emprestimo {
     private int id;
     private int idLivro;
     private int idLeitor;
-    private String dataSaída;
+    private String dataSaida;
     private double valorMulta;
+    private String nomeLeitor;
+    private String tituloExemplar;
+
+    public String getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(String dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    public String getNomeLeitor() {
+        return nomeLeitor;
+    }
+
+    public void setNomeLeitor(String nomeLeitor) {
+        this.nomeLeitor = nomeLeitor;
+    }
+
+    public String getTituloExemplar() {
+        return tituloExemplar;
+    }
+
+    public void setTituloExemplar(String tituloExemplar) {
+        this.tituloExemplar = tituloExemplar;
+    }
 
     public int getId() {
         return id;
@@ -44,11 +70,4 @@ public class Emprestimo {
         this.valorMulta = valorMulta;
     }
 
-    public String getDataSaída() {
-        return dataSaída;
-    }
-
-    public void setDataSaída(String dataSaída) {
-        this.dataSaída = dataSaída;
-    }
 }

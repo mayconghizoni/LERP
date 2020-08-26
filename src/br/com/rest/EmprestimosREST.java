@@ -5,13 +5,14 @@ import br.com.jdbc.JDBCEmprestimoDAO;
 import br.com.modelo.Emprestimo;
 import com.google.gson.Gson;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("emprestimo")
 public class EmprestimosREST extends UtilRest{
@@ -27,7 +28,7 @@ public class EmprestimosREST extends UtilRest{
 
         Date data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd");
-        emprestimo.setDataSaída(formatarDate.format(data));
+        emprestimo.setDataSaida(formatarDate.format(data));
 
         JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
 
@@ -52,6 +53,54 @@ public class EmprestimosREST extends UtilRest{
         }else{
             conec.fecharConexao();
             return this.buildErrorResponse("Livro inexistênte!");
+        }
+
+    }
+
+    @GET
+    @Path("buscar")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar(){
+
+        try{
+
+            List<Emprestimo> listaEmprestimos = new ArrayList<Emprestimo>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+            listaEmprestimos = jdbcEmprestimo.buscar();
+
+            return this.buildResponse(listaEmprestimos);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @DELETE
+    @Path("finalizar/{id}")
+    @Consumes("application/*")
+    public Response finalizar (@PathParam("id") int id){
+
+        try{
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+            boolean retorno = jdbcEmprestimo.finalizar(id);
+
+            if(retorno){
+                return buildResponse("Empréstimo finalizado com sucesso!");
+            }else{
+                return buildErrorResponse("Erro ao finalizar empréstimo.");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return buildErrorResponse(e.getMessage());
         }
 
     }

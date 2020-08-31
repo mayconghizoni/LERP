@@ -10,9 +10,18 @@ public class Emprestimo {
     private int idLivro;
     private int idLeitor;
     private String dataSaida;
+    private String dataDev;
     private double valorMulta;
     private String nomeLeitor;
     private String tituloExemplar;
+
+    public String getDataDev() {
+        return dataDev;
+    }
+
+    public void setDataDev(String dataDev) {
+        this.dataDev = dataDev;
+    }
 
     public String getDataSaida() {
         return dataSaida;

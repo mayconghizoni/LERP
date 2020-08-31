@@ -11,5 +11,6 @@ public interface EmprestimoDAO {
     public boolean verificaExistenciaLivro(int id);
     public List<Emprestimo> buscar();
     public boolean finalizar(int id);
+    public boolean maisSete(Emprestimo emprestimo);
 
 }

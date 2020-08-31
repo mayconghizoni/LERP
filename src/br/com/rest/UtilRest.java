@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.Base64;
 
 public class UtilRest {
@@ -88,6 +89,137 @@ public class UtilRest {
 			e.printStackTrace();
 			return "Erro!";
 		}
+
+	}
+
+	public static Date adicionarSete(Date data){
+
+		int dia = data.getDate();
+		int mes = data.getMonth();
+		int ano = data.getYear();
+		int ultimoDia = 0;
+
+		if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){
+			ultimoDia = 31;
+		}else if(mes == 2){
+			if((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0)){
+				ultimoDia = 29;
+			}else{
+				ultimoDia = 28;
+			}
+		}else if(mes == 4 || mes == 6 || mes == 9 || mes == 11){
+			ultimoDia = 30;
+		}
+
+		if(dia + 7 > ultimoDia){
+
+			if (mes == 12){
+				mes = 1;
+				ano++;
+			}else{
+				mes++;
+			}
+
+			if (ultimoDia == 31){
+				if (dia == 25){
+					dia = 1;
+				}
+				if (dia == 26){
+					dia = 2;
+				}
+				if (dia == 27){
+					dia = 3;
+				}
+				if (dia == 28){
+					dia = 4;
+				}
+				if (dia == 29){
+					dia = 5;
+				}
+				if (dia == 30){
+					dia = 6;
+				}
+				if (dia == 31){
+					dia = 7;
+				}
+			}else if(ultimoDia == 30){
+				if (dia == 24){
+					dia = 1;
+				}
+				if (dia == 25){
+					dia = 2;
+				}
+				if (dia == 26){
+					dia = 3;
+				}
+				if (dia == 27){
+					dia = 4;
+				}
+				if (dia == 28){
+					dia = 5;
+				}
+				if (dia == 29){
+					dia = 6;
+				}
+				if (dia == 30){
+					dia = 7;
+				}
+			}else if(ultimoDia == 29){
+				if (dia == 23){
+					dia = 1;
+				}
+				if (dia == 24){
+					dia = 2;
+				}
+				if (dia == 25){
+					dia = 3;
+				}
+				if (dia == 26){
+					dia = 4;
+				}
+				if (dia == 27){
+					dia = 5;
+				}
+				if (dia == 28){
+					dia = 6;
+				}
+				if (dia == 29){
+					dia = 7;
+				}
+			}else if(ultimoDia == 28){
+				if (dia == 22){
+					dia = 1;
+				}
+				if (dia == 23){
+					dia = 2;
+				}
+				if (dia == 24){
+					dia = 3;
+				}
+				if (dia == 25){
+					dia = 4;
+				}
+				if (dia == 26){
+					dia = 5;
+				}
+				if (dia == 27){
+					dia = 6;
+				}
+				if (dia == 28){
+					dia = 7;
+				}
+			}
+		}else{
+			dia = dia + 7;
+		}
+
+		Date dataDev = new Date();
+
+		dataDev.setDate(dia);
+		dataDev.setMonth(mes);
+		dataDev.setYear(ano);
+
+		return dataDev;
 
 	}
 

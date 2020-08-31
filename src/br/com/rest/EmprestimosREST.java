@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +26,13 @@ public class EmprestimosREST extends UtilRest{
         Conexao conec = new Conexao();
         Connection conexao = conec.abrirConexao();
 
-        Date data = new Date(System.currentTimeMillis());
+        Date dataSaida = new Date(System.currentTimeMillis());
         SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd");
-        emprestimo.setDataSaida(formatarDate.format(data));
+        emprestimo.setDataSaida(formatarDate.format(dataSaida));
+
+        Date dataDev = new Date();
+        dataDev = adicionarSete(dataSaida);
+        emprestimo.setDataDev(formatarDate.format(dataDev));
 
         JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
 
@@ -104,5 +108,34 @@ public class EmprestimosREST extends UtilRest{
         }
 
     }
+
+    @PUT
+    @Path("maisSete/{id}")
+    @Consumes("application/*")
+    public Response maisSeteDias (@PathParam("id") int id){
+
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setId(id);
+        Conexao conec = new Conexao();
+        Connection conexao = conec.abrirConexao();
+
+        Date dataAtual = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd");
+        Date dataDev = new Date();
+        dataDev = adicionarSete(dataAtual);
+        emprestimo.setDataDev(formatarDate.format(dataDev));
+
+        JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+
+        boolean retorno = jdbcEmprestimo.maisSete(emprestimo);
+
+        if(retorno){
+            return buildResponse("Prazo prorrogado!");
+        }else{
+            return buildErrorResponse("Erro ao estender prazo de empréstimo.");
+        }
+
+    }
+
 
 }

@@ -5,6 +5,7 @@ import br.com.modelo.Emprestimo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class JDBCEmprestimoDAO implements EmprestimoDAO {
@@ -17,7 +18,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
     @Override
     public boolean inserir(Emprestimo emprestimo) {
 
-        String comando = "INSERT INTO emprestimos (leitor_idleitor, exemplar_idexemplar, dataSaida) VALUES (? , ? , ?);";
+        String comando = "INSERT INTO emprestimos (leitor_idleitor, exemplar_idexemplar, dataSaida, dataDev) VALUES (? , ? , ?, ?);";
 
         PreparedStatement p;
 
@@ -28,6 +29,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
             p.setInt(1, emprestimo.getIdLeitor());
             p.setInt(2, emprestimo.getIdLivro());
             p.setString(3, emprestimo.getDataSaida());
+            p.setString(4, emprestimo.getDataDev());
 
             p.execute();
 
@@ -105,6 +107,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
                 emprestimo.setIdLivro(rs.getInt("exemplar_idexemplar"));
                 emprestimo.setIdLeitor(rs.getInt("leitor_idleitor"));
                 emprestimo.setDataSaida(rs.getString("dataSaida"));
+                emprestimo.setDataDev(rs.getString("datadev"));
                 emprestimo.setValorMulta(rs.getDouble("multaArrecadada"));
                 emprestimo.setNomeLeitor(rs.getString("nome"));
                 emprestimo.setTituloExemplar(rs.getString("titulo"));
@@ -139,5 +142,28 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
 
         return true;
 
+    }
+
+    @Override
+    public boolean maisSete(Emprestimo emprestimo) {
+
+        String comando = "UPDATE emprestimos SET dataDev = ? WHERE idemprestimos = ?;";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+            p.setString(1, emprestimo.getDataDev());
+            p.setInt(2, emprestimo.getId());
+
+            p.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

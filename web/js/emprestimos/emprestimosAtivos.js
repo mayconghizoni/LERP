@@ -26,7 +26,6 @@ $(document).ready(function () {
 
     LERP.emprestimos.exibir = function (listaEmprestimos) {
 
-
         if(listaEmprestimos != undefined && listaEmprestimos.length > 0 ) {
 
             var emprestimo = "<div>";
@@ -37,9 +36,10 @@ $(document).ready(function () {
                         "<div class=\"card-body\">" +
                         "<h5 class=\"card-title\">" + listaEmprestimos[i].tituloExemplar + "</h5>" +
                         "<p class=\"card-text\"> Leitor: " + listaEmprestimos[i].nomeLeitor + "</p>" +
-                        "<p class=\"card-text\"> Data de devolução: " + listaEmprestimos[i].dataSaida + "</p>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.emprestimos.finalizarEmprestimo('"+listaEmprestimos[i].id+"')\">Finalizar empréstimo</button>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\">Alterar</button>" +
+                        "<p class=\"card-text\"> Data de retirada: " +listaEmprestimos[i].dataSaida +"</p>" +
+                        "<p class=\"card-text\"> Data de devolução: " + listaEmprestimos[i].dataDev + "</p>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.emprestimos.finalizarEmprestimo('"+listaEmprestimos[i].id+"')\">Finalizar</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.emprestimos.prorrogarPrazo('"+listaEmprestimos[i].id+"')\">Prorrogar entrega</button>" +
                         "</div>" +
                         "</div>"
 
@@ -87,6 +87,42 @@ $(document).ready(function () {
         }
 
         $("#modalEmprestimo").dialog(modalEmprestimo);
+
+    }
+
+    LERP.emprestimos.prorrogarPrazo = function(id){
+
+        let modalProrrogar = {
+            title: "Prorrogar prazo de entrega",
+            height: 200,
+            width: 550,
+            buttons:{
+                "Sim": function(){
+                    $.ajax({
+                        type: "PUT",
+                        url: "/LERP/rest/emprestimo/maisSete/"+id,
+                        success: function(msg){
+                            LERP.modalAviso(msg);
+                            LERP.emprestimos.buscar();
+                            $("#modalProrrogar").dialog("close");
+                        },
+                        error: function(info){
+                            LERP.modalAviso(info.responseText);
+                            $("#modalProrrogar").dialog("close");
+                        }
+                    })
+                },
+                "Cancelar": function(){
+                    $(this).dialog("close");
+                }
+            },
+            close: function(){
+                $(this).dialog("close");
+            }
+        }
+
+        $("#modalProrrogar").dialog(modalProrrogar);
+
 
     }
 

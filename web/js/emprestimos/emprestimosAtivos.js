@@ -58,7 +58,7 @@ $(document).ready(function () {
     LERP.emprestimos.finalizarEmprestimo = function (id) {
 
         let modalEmprestimo = {
-            title: "Manutenção de exemplar",
+            title: "Finalizar emprestimo?",
             height: 200,
             width: 550,
             buttons:{
@@ -125,6 +125,5 @@ $(document).ready(function () {
 
 
     }
-
 })
 

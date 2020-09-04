@@ -4,6 +4,8 @@ import br.com.jdbcinterface.EmprestimoDAO;
 import br.com.modelo.Emprestimo;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,7 +110,6 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
                 emprestimo.setIdLeitor(rs.getInt("leitor_idleitor"));
                 emprestimo.setDataSaida(rs.getString("dataSaida"));
                 emprestimo.setDataDev(rs.getString("datadev"));
-                emprestimo.setValorMulta(rs.getDouble("multaArrecadada"));
                 emprestimo.setNomeLeitor(rs.getString("nome"));
                 emprestimo.setTituloExemplar(rs.getString("titulo"));
 
@@ -165,5 +166,114 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean verificaQuantidade(int idLeitor) {
+
+        String comando = "SELECT COUNT(*) AS quantidade from emprestimos WHERE leitor_idleitor = ?;";
+
+        PreparedStatement p;
+        int quantidade = 0;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+            p.setInt(1, idLeitor);
+
+            ResultSet rs = p.executeQuery();
+
+            while (rs.next()){
+                quantidade = rs.getInt("quantidade");
+            }
+
+            if(quantidade > 2){
+                return false;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+
+    }
+
+    @Override
+    public Date buscarPrazo(int idemprestimo) {
+
+        String com = "SELECT dataDev FROM emprestimos WHERE idemprestimos = ?;";
+
+        PreparedStatement p;
+
+        String dataRet = "";
+
+        try{
+
+            p = this.conexao.prepareStatement(com);
+            p.setInt(1, idemprestimo);
+
+            ResultSet rs = p.executeQuery();
+
+            if (rs.next()){
+                dataRet = rs.getString("dataDev");
+            }
+
+            Date dataDev = new SimpleDateFormat("yyyy-MM-dd").parse(dataRet);
+
+            return dataDev;
+
+        }catch (SQLException | ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public void inserirValor(Double valor){
+
+        String com = "update caixa set valor = ?";
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(com);
+            p.setDouble(1, valor);
+            p.execute();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean livreDeMulta(int idLeitor) {
+
+        String comando = "SELECT multa FROM leitor WHERE idleitor = ?;";
+
+        PreparedStatement p;
+        int multa = 0;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+            p.setInt(1, idLeitor);
+            ResultSet rs = p.executeQuery();
+
+            if(rs.next()){
+                multa = rs.getInt("multa");
+            }
+            if (multa == 0 ){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

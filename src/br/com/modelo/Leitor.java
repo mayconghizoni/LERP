@@ -13,6 +13,24 @@ public class Leitor implements Serializable {
     private String endereco;
     private int status;
     private String email;
+    private int multa;
+    private double valorMulta;
+
+    public int getMulta() {
+        return multa;
+    }
+
+    public void setMulta(int multa) {
+        this.multa = multa;
+    }
+
+    public double getValorMulta() {
+        return valorMulta;
+    }
+
+    public void setValorMulta(double valorMulta) {
+        this.valorMulta = valorMulta;
+    }
 
     public String getEmail() {
         return email;

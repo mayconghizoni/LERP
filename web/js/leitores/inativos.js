@@ -30,7 +30,7 @@ $(document).ready(function () {
 
             for (var i = 0; i < listaLeitores.length; i++) {
 
-                if(listaLeitores[i].status == 4){
+                if(listaLeitores[i].status == 3){
                     leitor += "<div class=\"card livros\">" +
                         "<div class=\"card-body\">" +
                         "<h5 class=\"card-title\">" + listaLeitores[i].nome + "</h5>" +

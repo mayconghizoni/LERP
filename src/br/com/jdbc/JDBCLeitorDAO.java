@@ -1,8 +1,8 @@
 package br.com.jdbc;
 
 import br.com.jdbcinterface.LeitorDAO;
-import br.com.modelo.Exemplar;
 import br.com.modelo.Leitor;
+import com.mysql.cj.xdevapi.Result;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -70,6 +70,8 @@ public class JDBCLeitorDAO implements LeitorDAO {
                 leitor.setEndereco(rs.getString("endereco"));
                 leitor.setStatus(rs.getInt("status"));
                 leitor.setEmail(rs.getString("email"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta(rs.getInt("multa"));
 
                 listaLeitores.add(leitor);
 
@@ -103,6 +105,8 @@ public class JDBCLeitorDAO implements LeitorDAO {
                 leitor.setEndereco(rs.getString("endereco"));
                 leitor.setStatus(rs.getInt("status"));
                 leitor.setFone(rs.getString("telefone"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta(rs.getInt("multa"));
 
             }
 
@@ -229,6 +233,63 @@ public class JDBCLeitorDAO implements LeitorDAO {
         }
 
         return listaLeitores;
+
+    }
+
+    @Override
+    public void adicionarMulta(double valor, int id) {
+
+        String sql = "Select idleitor from leitor where idleitor in (select leitor_idleitor from emprestimos where idemprestimos = ?);";
+        PreparedStatement ps;
+        int idLeitor = 0;
+        try{
+            ps = this.conexao.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                idLeitor = rs.getInt("idleitor");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        JDBCEmprestimoDAO jdbcEmprestimoDAO = new JDBCEmprestimoDAO(conexao);
+        boolean livre = jdbcEmprestimoDAO.livreDeMulta(idLeitor);
+        double valorMulta = 0;
+
+        if(!livre){
+            String sql2 = "Select valorMulta from leitor where idLeitor = ?;";
+            PreparedStatement ps2;
+            try{
+                ps2 = this.conexao.prepareStatement(sql2);
+                ps2.setInt(1, idLeitor);
+                ResultSet rs = ps2.executeQuery();
+                if(rs.next()){
+                    valorMulta = rs.getDouble("valorMulta");
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        if(!livre){
+            valor += valorMulta;
+        }
+
+        String comando = "UPDATE leitor SET valorMulta = ?, multa = 1 WHERE idleitor = ?;";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+            p.setDouble(1,valor);
+            p.setInt(2, idLeitor);
+            p.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 }

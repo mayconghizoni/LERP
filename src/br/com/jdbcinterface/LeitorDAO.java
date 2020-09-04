@@ -13,5 +13,6 @@ public interface LeitorDAO {
     public boolean inativar(int id);
     public boolean ativar(int id);
     public List<Leitor> buscarPorNome(String valorBusca);
+    public void adicionarMulta (double valor, int idLeitor);
 
 }

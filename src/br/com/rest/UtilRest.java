@@ -6,8 +6,16 @@ import com.google.gson.Gson;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Base64;
+import java.util.GregorianCalendar;
 
 public class UtilRest {
 	
@@ -220,6 +228,49 @@ public class UtilRest {
 		dataDev.setYear(ano);
 
 		return dataDev;
+
+	}
+
+	public static int contaDias(Date dataDev){
+
+		int dias = 0;
+
+		int dia = dataDev.getDate();
+		int mes = dataDev.getMonth()+1;
+		int ano = dataDev.getYear()+1900;
+
+		Date dataAtual = new Date(System.currentTimeMillis());
+
+		int diaAtual = dataAtual.getDate();
+		int mesAtual = dataAtual.getMonth()+1;
+		int anoAtual = dataAtual.getYear()+1900;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+		String dataA = diaAtual + "-" + mesAtual + "-" + anoAtual;
+		String dataD = dia + "-" + mes + "-" + ano;
+
+		try {
+
+			Date date1 = sdf.parse(dataA);
+			Date date2 = sdf.parse(dataD);
+			Calendar cal1 = new GregorianCalendar();
+			Calendar cal2 = new GregorianCalendar();
+			cal1.setTime(date1);
+			cal2.setTime(date2);
+
+			dias = daysBetween(cal1.getTime(), cal2.getTime());
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dias;
+	}
+
+	public static int daysBetween(Date d1, Date d2){
+		return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 
 	}
 

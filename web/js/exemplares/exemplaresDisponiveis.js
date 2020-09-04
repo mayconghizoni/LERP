@@ -59,7 +59,7 @@ $(document).ready(function ()  {
 
         document.frmCadastroEmprestimo.idExemplar.value = id;
 
-        let modalManutencaoExemplar = {
+        var modalManutencaoExemplar = {
             title: "Cadastrar novo empréstimo",
             height: 350,
             width: 550,
@@ -88,16 +88,16 @@ $(document).ready(function ()  {
                             data: JSON.stringify(emprestimo),
 
                             success: function (msg) {
-                                $("#cadastraEmprestimo").trigger("reset");
                                 LERP.modalAviso(msg);
                                 LERP.exemplares.buscar();
+                                $("#cadastraEmprestimo").trigger("reset");
 
                             },
                             error: function (info) {
-                                LERP.modalAviso("Erro ao realizar empréstimo: "+info.statusText+" - " + info.status);
+                                LERP.modalAviso(info.responseText);
                             }
                         })
-
+                        $(this).dialog("close");
                     }
 
                 },
@@ -108,6 +108,7 @@ $(document).ready(function ()  {
             close: function(){
                 $(this).dialog("close");
             }
+
         }
 
         $("#modalCadastroEmprestimo").dialog(modalManutencaoExemplar);

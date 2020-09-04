@@ -2,6 +2,7 @@ package br.com.rest;
 
 import br.com.bd.Conexao;
 import br.com.jdbc.JDBCEmprestimoDAO;
+import br.com.jdbc.JDBCLeitorDAO;
 import br.com.modelo.Emprestimo;
 import com.google.gson.Gson;
 
@@ -38,27 +39,38 @@ public class EmprestimosREST extends UtilRest{
 
         boolean existenciaLeitor = jdbcEmprestimo.verificaExistenciaLeitor(emprestimo.getIdLeitor());
         boolean existenciaLivro = jdbcEmprestimo.verificaExistenciaLivro(emprestimo.getIdLivro());
+        boolean emprestouTres = jdbcEmprestimo.verificaQuantidade(emprestimo.getIdLeitor());
+        boolean multaPendente = jdbcEmprestimo.livreDeMulta(emprestimo.getIdLeitor());
 
-        if (existenciaLivro){
-            if (existenciaLeitor){
-                boolean retorno = jdbcEmprestimo.inserir(emprestimo);
+        if(multaPendente){
+            if (emprestouTres){
+                if (existenciaLivro){
+                    if (existenciaLeitor){
+                        boolean retorno = jdbcEmprestimo.inserir(emprestimo);
 
-                if (retorno){
-                    conec.fecharConexao();
-                    return this.buildResponse("Empréstimo adicionado com sucesso!");
+                        if (retorno){
+                            conec.fecharConexao();
+                            return this.buildResponse("Empréstimo adicionado com sucesso!");
+                        }else{
+                            conec.fecharConexao();
+                            return this.buildErrorResponse("Erro ao cadastrar empréstimo!");
+                        }
+                    }else{
+                        conec.fecharConexao();
+                        return this.buildErrorResponse("Usuário inexistênte!");
+                    }
                 }else{
                     conec.fecharConexao();
-                    return this.buildErrorResponse("Erro ao cadastrar empréstimo!");
+                    return this.buildErrorResponse("Livro inexistênte!");
                 }
             }else{
                 conec.fecharConexao();
-                return this.buildErrorResponse("Usuário inexistênte!");
+                return this.buildErrorResponse("Limite de empréstimos atingidos!");
             }
         }else{
             conec.fecharConexao();
-            return this.buildErrorResponse("Livro inexistênte!");
+            return this.buildErrorResponse("Este leitor tem multas pendentes!");
         }
-
     }
 
     @GET
@@ -94,10 +106,28 @@ public class EmprestimosREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+
+            Date dataDev = jdbcEmprestimo.buscarPrazo(id);
+            int dias = contaDias(dataDev);
+
+            boolean hasMulta = false;
+            String stringMulta = " e não há multas.";
+
+            if(dias < 0){
+                hasMulta = true;
+                dias = dias * -1;
+                Double valor = 1.50 * dias;
+                jdbcEmprestimo.inserirValor(valor);
+                stringMulta = "com multa no valor de R$"+ valor;
+                JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+                jdbcLeitor.adicionarMulta(valor, id);
+            }
+
             boolean retorno = jdbcEmprestimo.finalizar(id);
 
+            conec.fecharConexao();
             if(retorno){
-                return buildResponse("Empréstimo finalizado com sucesso!");
+                return buildResponse("Empréstimo finalizado com sucesso, "+stringMulta);
             }else{
                 return buildErrorResponse("Erro ao finalizar empréstimo.");
             }

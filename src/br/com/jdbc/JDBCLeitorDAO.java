@@ -223,6 +223,7 @@ public class JDBCLeitorDAO implements LeitorDAO {
                 leitor.setCpf(rs.getString("cpf"));
                 leitor.setEmail(rs.getString("email"));
                 leitor.setStatus(rs.getInt("status"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
 
                 listaLeitores.add(leitor);
 

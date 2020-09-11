@@ -34,7 +34,7 @@ $(document).ready(function () {
                     leitor += "<div class=\"card livros\">" +
                         "<div class=\"card-body\">" +
                         "<h5 class=\"card-title\">" + listaLeitores[i].nome + "</h5>" +
-                        "<p class=\"card-text\">" + listaLeitores[i].email + "</p>" +
+                        "<p class=\"card-text\"> R$" + listaLeitores[i].valorMulta + "</p>" +
                         "<p class=\"card-text\">" + listaLeitores[i].fone + "</p>" +
                         "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.leitores.visualizar('"+listaLeitores[i].id+"')\">Visualizar</button>" +
                         "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\">Cobrar multa</button>" +

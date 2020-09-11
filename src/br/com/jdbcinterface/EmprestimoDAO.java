@@ -17,6 +17,7 @@ public interface EmprestimoDAO {
     public Date buscarPrazo(int idemprestimo);
     public void inserirValor(Double valor);
     public boolean livreDeMulta (int idLeitor);
+    public List<Emprestimo> buscarPorParametro(String valorBusca);
 
 
 }

@@ -276,4 +276,44 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
         }
 
     }
+
+    @Override
+    public List<Emprestimo> buscarPorParametro(String valorBusca) {
+
+        String comando = "SELECT * FROM emprestimos as emp INNER JOIN leitor as l on leitor_idleitor = idleitor inner join exemplares as ex on exemplar_idexemplar = idexemplares ";
+
+        if(!valorBusca.equals("")){
+            comando+= "WHERE l.nome LIKE '%"+valorBusca+"%' OR ex.titulo LIKE '%"+valorBusca+"%' OR ex.autor LIKE '%"+valorBusca+"%' ";
+        }
+
+        comando += "ORDER BY emp.dataDev ASC;";
+
+        List<Emprestimo> listaEmprestimos = new ArrayList<Emprestimo>();
+
+        Emprestimo emprestimo = null;
+
+        try{
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while (rs.next()){
+                emprestimo = new Emprestimo();
+
+                emprestimo.setId(rs.getInt("idemprestimos"));
+                emprestimo.setIdLivro(rs.getInt("exemplar_idexemplar"));
+                emprestimo.setIdLeitor(rs.getInt("leitor_idleitor"));
+                emprestimo.setDataSaida(rs.getString("dataSaida"));
+                emprestimo.setDataDev(rs.getString("datadev"));
+                emprestimo.setNomeLeitor(rs.getString("nome"));
+                emprestimo.setTituloExemplar(rs.getString("titulo"));
+
+                listaEmprestimos.add(emprestimo);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaEmprestimos;
+    }
 }

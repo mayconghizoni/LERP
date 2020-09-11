@@ -125,5 +125,31 @@ $(document).ready(function () {
 
 
     }
+
+    LERP.emprestimos.buscarPorParametro = function () {
+
+        var valorBusca = $("#campoBuscarPorParametro").val();
+
+        console.log(valorBusca)
+
+
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/emprestimo/buscarPorParametro",
+            data: "valorBusca="+valorBusca,
+            success: function (dados) {
+
+                $("#listaEmprestimos").html(LERP.emprestimos.exibir(dados));
+
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro: "+ info.status + " - " + info.statusText)
+            }
+
+
+
+        })
+
+    }
 })
 

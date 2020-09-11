@@ -167,5 +167,33 @@ public class EmprestimosREST extends UtilRest{
 
     }
 
+    @GET
+    @Path("buscarPorParametro")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarPorParametro(@QueryParam("valorBusca") String valorBusca){
+
+        try{
+
+            System.out.print(valorBusca);
+
+            //iniciar
+            List<Emprestimo> listaEmprestimos = new ArrayList<Emprestimo>();
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+            listaEmprestimos = jdbcEmprestimo.buscarPorParametro(valorBusca);
+
+            conec.fecharConexao();
+
+            return this.buildResponse(listaEmprestimos);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
 
 }

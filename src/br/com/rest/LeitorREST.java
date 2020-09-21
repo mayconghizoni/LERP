@@ -196,4 +196,66 @@ public class LeitorREST extends UtilRest {
         }
     }
 
+    @PUT
+    @Path("pagarTotal/{id}")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response pagarTotal(@PathParam("id") int id){
+
+        try {
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            boolean adicionado = jdbcLeitor.verificaValor(id);
+
+            if(adicionado){
+                boolean retorno = jdbcLeitor.pagarTotal(id);
+                conec.fecharConexao();
+
+                if (retorno){
+                    return buildResponse("Multa paga com sucesso!");
+                }else{
+                    return buildErrorResponse("Erro ao acertar multa, tente novamente!");
+                }
+            }else{
+                return buildErrorResponse("Erro ao acertar multa, tente novamente!");
+            }
+
+        }catch (Exception e){
+            return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @PUT
+    @Path("pagarParcial")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response pagarParcial(String leitorParam) {
+
+        try {
+
+            Leitor leitor = new Gson().fromJson(leitorParam, Leitor.class);
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+
+            double valorDivida = jdbcLeitor.pegarDivida(leitor.getId());
+            double novaDivida = valorDivida - leitor.getValorMulta();
+            boolean multaAtualizada = jdbcLeitor.atualizarMulta(leitor.getId(),novaDivida);
+
+            if (multaAtualizada){
+                jdbcLeitor.inserirValor(leitor.getValorMulta());
+                return buildResponse("Multa paga parcialmente! Sua nova divida é dê: "+novaDivida);
+            }else{
+                return buildErrorResponse("Erro ao calcular multa!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
 }

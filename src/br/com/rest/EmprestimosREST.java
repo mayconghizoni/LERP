@@ -117,7 +117,6 @@ public class EmprestimosREST extends UtilRest{
                 hasMulta = true;
                 dias = dias * -1;
                 Double valor = 1.50 * dias;
-                jdbcEmprestimo.inserirValor(valor);
                 stringMulta = "com multa no valor de R$"+ valor;
                 JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
                 jdbcLeitor.adicionarMulta(valor, id);

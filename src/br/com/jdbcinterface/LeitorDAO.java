@@ -14,5 +14,10 @@ public interface LeitorDAO {
     public boolean ativar(int id);
     public List<Leitor> buscarPorNome(String valorBusca);
     public void adicionarMulta (double valor, int idLeitor);
+    public boolean pagarTotal(int id);
+    public void inserirValor(Double valor);
+    public boolean verificaValor(int id);
+    public double pegarDivida(int id);
+    public boolean atualizarMulta(int id, double valor);
 
 }

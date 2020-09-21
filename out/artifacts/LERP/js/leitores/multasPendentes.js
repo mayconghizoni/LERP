@@ -36,8 +36,8 @@ $(document).ready(function () {
                         "<h5 class=\"card-title\">" + listaLeitores[i].nome + "</h5>" +
                         "<p class=\"card-text\"> R$" + listaLeitores[i].valorMulta + "</p>" +
                         "<p class=\"card-text\">" + listaLeitores[i].fone + "</p>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.leitores.visualizar('"+listaLeitores[i].id+"')\">Visualizar</button>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\">Cobrar multa</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.leitores.pagamentoTotal('"+listaLeitores[i].id+"')\">Pagamento total</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.leitores.pagamentoParcial('"+listaLeitores[i].id+"')\">Parcial</button>" +
                         "</div>" +
                         "</div>"
                 }
@@ -49,6 +49,86 @@ $(document).ready(function () {
         }
 
         return leitor;
+
+    }
+
+    LERP.leitores.pagamentoParcial = function(id){
+
+        let modalCobrarMultaParcial = {
+            title: "Pagamento parcial",
+            height: 250,
+            width: 450,
+            buttons:{
+                "Pagar": function () {
+
+                    var leitor = new Object();
+
+                    leitor.id = id;
+                    leitor.valorMulta = document.frmCobrarParcial.valor.value;
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/LERP/rest/leitor/pagarParcial/",
+                        data: JSON.stringify(leitor),
+                        success: function (msg) {
+                            LERP.modalAviso(msg);
+                            $("#modalCobrarMultaParcial").dialog("close");
+                            LERP.leitores.buscar();
+                        },
+                        error: function (info) {
+                            LERP.modalAviso(info.responseText);
+                            $("#modalCobrarMultaParcial").dialog("close");
+                        }
+                    })
+
+                },
+                "Cancelar": function () {
+                    $(this).dialog("close");
+                }
+            },
+            close: function(){
+                $(this).dialog("close");
+            }
+        }
+
+        $("#modalCobrarMultaParcial").dialog(modalCobrarMultaParcial);
+
+    }
+
+    LERP.leitores.pagamentoTotal = function(id){
+
+        let modalCobrarMulta = {
+            title: "Pagamento",
+            height: 200,
+            width: 550,
+            buttons:{
+                "Sim": function () {
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/LERP/rest/leitor/pagarTotal/"+id,
+                        success: function (msg) {
+                            LERP.modalAviso(msg);
+                            $("#modalCobrarMulta").dialog("close");
+                            LERP.leitores.buscar();
+                        },
+                        error: function (info) {
+                            LERP.modalAviso(info.responseText);
+                            $("#modalCobrarMulta").dialog("close");
+                        }
+                    })
+
+                },
+                "Cancelar": function () {
+                    $(this).dialog("close");
+                }
+            },
+            close: function(){
+                $(this).dialog("close");
+            }
+        }
+
+        $("#modalCobrarMulta").dialog(modalCobrarMulta);
 
     }
 

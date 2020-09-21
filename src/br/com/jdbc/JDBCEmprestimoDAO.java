@@ -46,7 +46,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
     @Override
     public boolean verificaExistenciaLeitor(int id) {
 
-        String comando = "SELECT * from leitor WHERE idleitor = "+id+";";
+        String comando = "SELECT * from leitor WHERE status = 1 AND idleitor = "+id+";";
 
         try{
 
@@ -229,22 +229,6 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
             return null;
         }
 
-    }
-
-    public void inserirValor(Double valor){
-
-        String com = "update caixa set valor = ?";
-        PreparedStatement p;
-
-        try{
-
-            p = this.conexao.prepareStatement(com);
-            p.setDouble(1, valor);
-            p.execute();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     @Override

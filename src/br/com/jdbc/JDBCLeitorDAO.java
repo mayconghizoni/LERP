@@ -293,4 +293,139 @@ public class JDBCLeitorDAO implements LeitorDAO {
         }
 
     }
+
+    @Override
+    public boolean pagarTotal(int id) {
+
+        String comando = "UPDATE leitor SET multa = 0, valorMulta = 0 WHERE idleitor = ?;";
+
+        PreparedStatement ps;
+
+        try{
+
+            ps = this.conexao.prepareStatement(comando);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void inserirValor(Double valor){
+
+        double emCaixa = 0;
+
+        String comando = "SELECT * From caixa;";
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            if (rs.next()){
+                emCaixa = rs.getDouble("valor");
+             }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        //Soma de valores
+        double valorAtt = valor + emCaixa;
+
+        String com = "update caixa set valor = ?";
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(com);
+            p.setDouble(1, valorAtt);
+            p.execute();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean verificaValor(int id){
+
+        String sql = "SELECT valorMulta FROM leitor WHERE idleitor = ?;";
+        double valor = 0;
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(sql);
+            p.setInt(1,id);
+
+            ResultSet rs = p.executeQuery();
+
+            if (rs.next()){
+                valor = rs.getDouble("valorMulta");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        inserirValor(valor);
+        return true;
+    }
+
+    @Override
+    public double pegarDivida(int id) {
+
+        double valor =0;
+
+        String comando = "SELECT valorMulta FROM leitor WHERE idleitor = ?;";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+            p.setInt(1,id);
+
+            ResultSet rs = p.executeQuery();
+
+            if (rs.next()){
+                valor = rs.getDouble("valorMulta");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return valor;
+
+    }
+
+    @Override
+    public boolean atualizarMulta(int id, double valor) {
+
+        String comando = "UPDATE leitor SET valorMulta = ? WHERE idleitor = ?;";
+
+        PreparedStatement p;
+
+        try{
+
+            p = this.conexao.prepareStatement(comando);
+
+            p.setDouble(1,valor);
+            p.setInt(2,id);
+            p.executeUpdate();
+
+            return true;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }

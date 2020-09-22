@@ -1,0 +1,64 @@
+<h5 class="card-title identificador">Caixa</h5>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" onclick="caixa()"> Dinheiro em caixa</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="card">
+    <div class="card-body" id="body-emprestimos">
+
+        <div name="divCaixa" id="valorCaixa">
+
+        </div>
+
+    </div>
+</div>
+
+<div id="modalVisualizaRetirada" class="modalRetirada">
+    <form name="frmRetirada" id="retirada">
+
+        <div class="form-group">
+            <label for="valorR">Valor retirado</label>
+            <input type="text" class="form-control" name="retirada" id="valorR">
+        </div>
+
+        <div class="form-group">
+            <label for="inputMotivo">Motivo</label>
+            <select name="inputMotivo" id="inputMotivo" class="form-control">
+                <option value="">Escolha</option>
+                <option value="1">Manutenção de exemplares</option>
+                <option value="2">Compra de exemplares</option>
+                <option value="3">Manutenção geral da biblioteca</option>
+            </select>
+        </div>
+
+    </form>
+</div>
+
+<div id="modalVisualizaAcrescimo" class="modalAcrescimo">
+    <form name="frmAcrescimo" id="acrescimo">
+
+        <div class="form-group">
+            <label for="valor">Valor acrescentado</label>
+            <input type="text" class="form-control" name="acrescimo" id="valor">
+        </div>
+
+        <div class="form-group">
+            <label for="inputMotivoA">Motivo</label>
+            <select name="inputMotivoA" id="inputMotivoA" class="form-control">
+                <option value="">Escolha</option>
+                <option value="1">Doação</option>
+                <option value="2">Venda de exemplares</option>
+            </select>
+        </div>
+
+    </form>
+</div>
+
+<script src="../../js/caixa/caixa.js"></script>

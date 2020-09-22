@@ -60,6 +60,10 @@ $(document).ready(function(){
         $("#modalAviso").dialog(modal)
     }
 
+    LERP.formatarDinheiro = function(valor){
+        return valor.toFixed(2).replace('.',',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
+    }
+
 })
 
 
@@ -86,6 +90,10 @@ leitores = function(){
 
 relatorios = function(){
     $("#body").load("relatorios/relatorios.html")
+}
+
+caixa = function(){
+    $("#body").load("caixa/caixa.html")
 }
 
 perfil = function(){

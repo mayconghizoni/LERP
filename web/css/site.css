@@ -149,7 +149,7 @@
     margin: 3px;
   }
 
-  #modalProrrogar, #modalCobrarMulta, #modalCobrarMultaParcial, #modalCadastroEmprestimo, #modalEmprestimo, #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor, #modalVisualizarEdicao, #modalInativarLeitor, #modalAtivarLeitor, #modalInativarUsuario, #modalAtivarUsuario{
+  #modalProrrogar, #modalCobrarMulta, #modalCobrarMultaParcial, #modalVisualizaRetirada, #modalVisualizaAcrescimo, #modalCadastroEmprestimo, #modalEmprestimo, #modalManutencao, #modalAviso, #modalExcluirExemplar, #modalVisualizarLeitor, #modalVisualizarEdicao, #modalInativarLeitor, #modalAtivarLeitor, #modalInativarUsuario, #modalAtivarUsuario{
     display: none;
   }
 

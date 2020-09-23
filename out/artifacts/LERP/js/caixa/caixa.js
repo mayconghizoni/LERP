@@ -54,6 +54,7 @@ $(document).ready(function () {
             buttons:{
                 "Retirar" : function () {
                     LERP.caixa.retirarValor()
+                    LERP.caixa.buscarValor()
                     $(this).dialog("close")
                 },
                 "Cancelar": function(){
@@ -66,6 +67,38 @@ $(document).ready(function () {
         }
 
         $("#modalVisualizaRetirada").dialog(modalVisualizaRetirada);
+
+    }
+
+    LERP.caixa.retirarValor = function(){
+
+        var caixa = new Object();
+
+        caixa.valor = document.frmRetirada.retirada.value
+        caixa.motivo = document.frmRetirada.inputMotivo.value
+
+        if (caixa.valor == ""){
+
+            LERP.modalAviso("Preencha o campo valor.")
+
+        }else if (caixa.motivo == ""){
+
+            LERP.modalAviso("Preencha o campo motivo.")
+
+        }else{
+
+            $.ajax({
+                type: "PUT",
+                url: "/LERP/rest/caixa/retirarValor",
+                data: JSON.stringify(caixa),
+                success: function (msg) {
+                    LERP.modalAviso(msg);
+                },
+                error: function (info) {
+                    LERP.modalAviso("Erro ao retirar valor em caixa: " + info.status + " - " + info.statusText);
+                }
+            })
+        }
 
     }
 
@@ -91,6 +124,37 @@ $(document).ready(function () {
 
         $("#modalVisualizaAcrescimo").dialog(modalVisualizaAcrescimo);
 
+    }
+
+    LERP.caixa.acrescentarValor = function(){
+
+        var caixa = new Object();
+
+        caixa.valor = document.frmAcrescimo.acrescimo.value
+        caixa.motivo = document.frmAcrescimo.inputMotivoA.value
+
+        if (caixa.valor == ""){
+
+            LERP.modalAviso("Preencha o campo valor.")
+
+        }else if (caixa.motivo == ""){
+
+            LERP.modalAviso("Preencha o campo motivo.")
+
+        }else{
+            $.ajax({
+                type: "PUT",
+                url: "/LERP/rest/caixa/acrescentarValor",
+                data: JSON.stringify(caixa),
+                success: function (msg) {
+                    LERP.caixa.buscarValor();
+                    LERP.modalAviso(msg);
+                },
+                error: function (info) {
+                    LERP.modalAviso("Erro ao acrescentar valor em caixa: " + info.status + " - " + info.statusText);
+                }
+            })
+        }
     }
 
 })

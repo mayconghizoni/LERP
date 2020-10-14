@@ -119,42 +119,41 @@ $(document).ready(function () {
         var cpf = leitor.cpf
         var expRegCpf = new RegExp("^[0-9]{3}[.]{1}[0-9]{3}[.]{1}[0-9]{3}[-]{1}[0-9]{2}$")
 
+        var endereco = leitor.endereco
+        var expRegEndereco = new RegExp("^[A-zÀ-ü]{3,}[,]{1}[ ]{1}[1-9]{1,}$");
+
+        var email = leitor.email;
+        var expRegEmail = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")
+
         if(!expRegNome.test(nome)){
             LERP.modalAviso("Preencha o campo Nome.")
-            document.frmVisualizaEdicao.nome.focus()
+            document.frmVisualizaEdicao.inputNome.focus()
             return false
         }
-        else if (leitor.email == ""){
-            alert("Preencha o campo Email.")
-            document.frmVisualizaEdicao.email.focus()
+        else if (!expRegEmail.test(email)){
+            LERP.modalAviso("Preencha o campo Email.")
+            document.frmVisualizaEdicao.inputEmail.focus()
             return false
         }
         else if (!expRegFone.test(fone)){
             LERP.modalAviso("Preencha o campo Telefone.")
-            document.frmVisualizaEdicao.fone.focus()
+            document.frmVisualizaEdicao.inputFone.focus()
             return false
         }
         else if (!expRegCpf.test(cpf)){
             LERP.modalAviso("Preencha o campo CPF.")
-            document.frmVisualizaEdicao.cpf.focus()
+            document.frmVisualizaEdicao.inputCpf.focus()
             return false
         }
-        else if (leitor.endereco==""){
+        else if (!expRegEndereco.test(endereco)){
             LERP.modalAviso("Preencha o campo Endereço.")
-            document.frmVisualizaEdicao.endereco.focus()
-            return false
-        }
-        else if (leitor.status==""){
-            LERP.modalAviso("Preencha o campo Status.")
-            document.frmVisualizaEdicao.status.focus()
-            return false
-        }
-        else if (leitor.id==""){
-            LERP.modalAviso("Preencha o campo ID.")
-            document.frmVisualizaEdicao.id.focus()
+            document.frmVisualizaEdicao.inputEndereco.focus()
             return false
         }
         else{
+
+            leitor.cpf = (leitor.cpf).replace('.', '').replace('.', '').replace('/', '').replace('-', '');
+            leitor.fone = (leitor.fone).replace('(', '').replace(')', '').replace('-', '');
 
             $.ajax({
                 type: "PUT",

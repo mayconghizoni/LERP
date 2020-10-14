@@ -33,7 +33,6 @@ $(document).ready(function () {
                 "<div class=\"card-body\">" +
                     "<h5>Valor em caixa: </h5>" +
                     "<p class=\"card-text\">R$"+LERP.formatarDinheiro(dados.valor)+"</p>" +
-                    "<hr>" +
                     "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.caixa.retirar()\">Retirar</button>" +
                     "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.caixa.acrescentar()\">Acrescentar</button>" +
                     "</div>" +

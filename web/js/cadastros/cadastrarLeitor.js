@@ -3,11 +3,11 @@ LERP.cadastros = new Object()
     cadastrarNovoLeitor = function () {
     var leitor = new Object();
 
-    leitor.nome = document.frmAddLeitor.inputNome.value;
-    leitor.fone = document.frmAddLeitor.inputFone.value;
-    leitor.cpf = document.frmAddLeitor.inputCpf.value;
-    leitor.endereco = document.frmAddLeitor.inputEndereco.value;
-    leitor.email = document.frmAddLeitor.inputEmail.value;
+    leitor.nome = document.frmVisualizaEdicao.inputNome.value;
+    leitor.fone = document.frmVisualizaEdicao.inputFone.value;
+    leitor.cpf = document.frmVisualizaEdicao.inputCpf.value;
+    leitor.endereco = document.frmVisualizaEdicao.inputEndereco.value;
+    leitor.email = document.frmVisualizaEdicao.inputEmail.value;
 
     var nome = leitor.nome
     var expRegNome = new RegExp("^[A-zÀ-ü]{3,}([ ]{1}[A-zÀ-ü]{2,})+$")
@@ -18,39 +18,49 @@ LERP.cadastros = new Object()
     var cpf = leitor.cpf
     var expRegCpf = new RegExp("^[0-9]{3}[.]{1}[0-9]{3}[.]{1}[0-9]{3}[-]{1}[0-9]{2}$")
 
+    var endereco = leitor.endereco
+    var expRegEndereco = new RegExp("^[A-zÀ-ü]{3,}[,]{1}[ ]{1}[1-9]{1,}$");
+
+    var email = leitor.email;
+    var expRegEmail = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")
+
     if(!expRegNome.test(nome)){
         LERP.modalAviso("Preencha o campo Nome.")
-        document.frmAddLeitor.inputNome.focus()
+        document.frmVisualizaEdicao.inputNome.focus()
         return false
     }
-    else if (leitor.email == ""){
-        alert("Preencha o campo Email.")
-        document.frmAddLeitor.inputEmail.focus()
+    else if (!expRegEmail.test(email)){
+        LERP.modalAviso("Preencha o campo Email.")
+        document.frmVisualizaEdicao.inputEmail.focus()
         return false
     }
     else if (!expRegFone.test(fone)){
         LERP.modalAviso("Preencha o campo Telefone.")
-        document.frmAddLeitor.inputFone.focus()
+        document.frmVisualizaEdicao.inputFone.focus()
         return false
     }
     else if (!expRegCpf.test(cpf)){
         LERP.modalAviso("Preencha o campo CPF.")
-        document.frmAddLeitor.inputCpf.focus()
+        document.frmVisualizaEdicao.inputCpf.focus()
         return false
     }
-    else if (leitor.endereco==""){
+    else if (!expRegEndereco.test(endereco)){
         LERP.modalAviso("Preencha o campo Endereço.")
-        document.frmAddLeitor.inputEndereco.focus()
+        document.frmVisualizaEdicao.inputEndereco.focus()
         return false
     }
     else{
+
+        leitor.cpf = (leitor.cpf).replace('.', '').replace('.', '').replace('/', '').replace('-', '');
+        leitor.fone = (leitor.fone).replace('(', '').replace(')', '').replace('-', '');
+
         $.ajax({
             type: "POST",
             url: "/LERP/rest/leitor/inserir",
             data: JSON.stringify(leitor),
 
             success: function (msg) {
-                $("#addExemplar").trigger("reset");
+                $("#addLeitor").trigger("reset");
                 LERP.modalAviso(msg);
 
             },

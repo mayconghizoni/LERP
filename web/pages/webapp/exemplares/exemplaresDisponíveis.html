@@ -23,7 +23,7 @@
                     <div class="input-group mb-3">
                         <input id="campoBuscarPorNome" type="text" class="form-control" placeholder="Pesquisar">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="button"  onclick="LERP.exemplares.buscarPorNome()">Search</button>
+                            <button class="btn btn-primary" type="button"  onclick="LERP.exemplares.buscarPorNome()">Pesquisar</button>
                         </div>
                     </div>
                 </div>
@@ -47,12 +47,12 @@
     <form name="frmCadastroEmprestimo" id="cadastraEmprestimo">
 
         <div class="form-group">
-            <label for="idExemplar">ID Exemplar</label>
-            <input type="text" class="form-control" name="idExemplar" id="idExemplar">
+            <label for="idExemplar">Exemplar</label>
+            <input type="text" class="form-control" name="idExemplar" id="idExemplar" disabled>
         </div>
         <div class="form-group">
-            <label for="idLeitor">ID Leitor</label>
-            <input type="text" class="form-control" name="idLeitor" id="idLeitor" >
+            <label for="inputIdLeitor">Leitor</label>
+            <select type="text" class="form-control" name="inputIdLeitor" id="inputIdLeitor"></select>
         </div>
 
     </form>

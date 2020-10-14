@@ -56,30 +56,39 @@ $(document).ready(function () {
         usuario.nome = document.frmAddUsuario.inputNome.value;
         usuario.email = document.frmAddUsuario.inputEmail.value;
         usuario.senha = document.frmAddUsuario.inputSenha.value;
-        usuario.acesso = document.frmAddUsuario.inputAcesso.value;
+        usuario.acesso = document.frmAddUsuario.inputAcesso.value
 
-        if(usuario.nome == ""){
-            alert("Preencha o campo Nome.")
+        var nome = usuario.nome
+        var expRegNome = new RegExp("^[A-zÀ-ü]{3,}([ ]{1}[A-zÀ-ü]{2,})+$")
+
+        var senha = usuario.senha
+        var expRegSenha = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
+
+        var email = usuario.email;
+        var expRegEmail = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")
+
+        if(!expRegNome.test(nome)){
+            LERP.modalAviso("Preencha o campo Nome.")
             document.frmAddUsuario.inputNome.focus()
             return false
         }
-        else if(usuario.email == ""){
-            alert("Preencha o campo Email.")
+        else if(!expRegEmail.test(email)){
+            LERP.modalAviso("Preencha o campo Email.")
             document.frmAddUsuario.inputEmail.focus()
             return false
         }
-        else if(usuario.senha == ""){
-            alert("Preencha o campo Senha.")
+        else if(!expRegSenha.test(senha)){
+            LERP.modalAviso("Preencha o campo Senha.")
             document.frmAddUsuario.inputSenha.focus()
             return false
         }
         else if(usuario.acesso == ""){
-            alert("Preencha o campo Nível de acesso.")
+            LERP.modalAviso("Preencha o campo Nível de acesso.")
             document.frmAddUsuario.inputAcesso.focus()
             return false
         }
         else if(usuario.senha != document.frmAddUsuario.inputConfirmaSenha.value){
-            alert("As senhas não coincidem, preencha o campo novamente. ")
+            LERP.modalAviso("As senhas não coincidem, preencha o campo novamente. ")
             document.frmAddUsuario.inputSenha.focus()
             return false
         }

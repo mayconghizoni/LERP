@@ -156,7 +156,7 @@ public class JDBCLeitorDAO implements LeitorDAO {
 
             p = this.conexao.prepareStatement(comando);
 
-            p.setInt(1, 4);
+            p.setInt(1, 3);
             p.setInt(2, id);
 
             p.executeUpdate();
@@ -224,6 +224,7 @@ public class JDBCLeitorDAO implements LeitorDAO {
                 leitor.setEmail(rs.getString("email"));
                 leitor.setStatus(rs.getInt("status"));
                 leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta((rs.getInt("multa")));
 
                 listaLeitores.add(leitor);
 

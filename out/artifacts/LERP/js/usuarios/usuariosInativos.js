@@ -1,4 +1,4 @@
-LERP.usuario = new Object();
+LERP.perfil = new Object();
 
 $(document).ready(function () {
 

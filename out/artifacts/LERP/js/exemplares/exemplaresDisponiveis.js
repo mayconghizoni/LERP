@@ -38,7 +38,7 @@ $(document).ready(function ()  {
                         "<div class=\"card-body\">" +
                         "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
                         "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.exemplares.exibirCadastroEmprestimo('"+listaExemplares[i].id+"')\">Reserve agora</button>" +
+                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.exemplares.buscarLeitores('"+listaExemplares[i].id+"','"+listaExemplares[i].titulo+"')\">Reserve agora</button>" +
                         "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.ativarManutencao('"+listaExemplares[i].id+"')\">Manutenção</button>" +
                         "</div>" +
                         "</div>"
@@ -55,9 +55,67 @@ $(document).ready(function ()  {
 
     }
 
-    LERP.exemplares.exibirCadastroEmprestimo = function(id){
+    LERP.exemplares.buscarLeitores = function(id,nomeExemplar){
 
-        document.frmCadastroEmprestimo.idExemplar.value = id;
+        $.ajax({
+            type: "GET",
+            url: "/LERP/rest/leitor/buscar",
+            success: function(leitores) {
+
+                if (leitores!=""){
+
+                    //Cria opção escolha com valor vazio como padrão caso haja algo no banco de dados
+                    $("#inputIdLeitor").html("")
+                    var option = document.createElement("option")
+                    option.setAttribute("value", "")
+                    option.innerHTML = ("Escolha")
+                    $("#inputIdLeitor").append(option)
+
+                    //A cada valor encontrado no banco, cria mais uma option dentro do select
+                    for (var i = 0; i < leitores.length; i++){
+
+                        if(leitores[i].status == 1 || leitores[i].status == 2){
+                            var option = document.createElement("option")
+                            option.setAttribute("value", leitores[i].id)
+
+                            option.innerHTML = (leitores[i].nome+" - "+leitores[i].id)
+                            $("#inputIdLeitor").append(option)
+                        }
+
+                    }
+
+                }else{
+                    $("#inputIdLeitor").html("")
+
+                    //Caso o não tenha nenhum valor cadastrado no banco ele cria uma uma option com aviso!
+                    var option = document.createElement("option")
+                    option.setAttribute("value", "")
+                    option.innerHTML = ("Cadastre um leitor primeiro!")
+                    $("#inputIdLeitor").append(option)
+                    $("#inputIdLeitor").addClass("aviso")
+
+                }
+            },
+            error: function (info) {
+                LERP.modalAviso("Erro ao buscar leitores: "+info.status+" - " + info.statusText)
+
+                $("#inputIdLeitor").html("")
+                var option = document.createElement("option")
+                option.setAttribute("value", "")
+                option.innerHTML = ("Erro ao carregar leitores!")
+                $("#inputIdLeitor").append(option)
+                $("#inputIdLeitor").addClass("aviso")
+            }
+
+        })
+
+        LERP.exemplares.exibirCadastroEmprestimo(id, nomeExemplar);
+
+    }
+
+    LERP.exemplares.exibirCadastroEmprestimo = function(id, nomeExemplar){
+
+        document.frmCadastroEmprestimo.idExemplar.value = nomeExemplar +" - "+ id;
 
         var modalManutencaoExemplar = {
             title: "Cadastrar novo empréstimo",
@@ -68,8 +126,8 @@ $(document).ready(function ()  {
 
                     var emprestimo = new Object();
 
-                    emprestimo.idLeitor = document.frmCadastroEmprestimo.idLeitor.value;
-                    emprestimo.idLivro = document.frmCadastroEmprestimo.idExemplar.value;
+                    emprestimo.idLeitor = document.frmCadastroEmprestimo.inputIdLeitor.value;
+                    emprestimo.idLivro = id;
 
                     if(emprestimo.idLeitor == ""){
                         LERP.modalAviso("Preencha o campo com o ID do leitor.")

@@ -46,9 +46,165 @@ public class JDBCLeitorDAO implements LeitorDAO {
     }
 
     @Override
-    public List<Leitor> buscar() {
+    public List<Leitor> buscar(int status) {
 
-        String comando = "SELECT * FROM leitor ORDER BY nome ASC;";
+        String comando = "SELECT * FROM leitor WHERE status = "+status+" ORDER BY nome ASC;";
+
+        List<Leitor> listaLeitores = new ArrayList<Leitor>();
+
+        Leitor leitor = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+
+                leitor = new Leitor();
+
+                leitor.setId(rs.getInt("idleitor"));
+                leitor.setCpf(rs.getString("cpf"));
+                leitor.setNome(rs.getString("nome"));
+                leitor.setFone(rs.getString("telefone"));
+                leitor.setEndereco(rs.getString("endereco"));
+                leitor.setStatus(rs.getInt("status"));
+                leitor.setEmail(rs.getString("email"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta(rs.getInt("multa"));
+
+                listaLeitores.add(leitor);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaLeitores;
+    }
+
+    @Override
+    public List<Leitor> buscarMultados(int multa) {
+
+        String comando = "SELECT * FROM leitor WHERE multa = "+multa+" ORDER BY nome ASC;";
+
+        List<Leitor> listaLeitores = new ArrayList<Leitor>();
+
+        Leitor leitor = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+
+                leitor = new Leitor();
+
+                leitor.setId(rs.getInt("idleitor"));
+                leitor.setCpf(rs.getString("cpf"));
+                leitor.setNome(rs.getString("nome"));
+                leitor.setFone(rs.getString("telefone"));
+                leitor.setEndereco(rs.getString("endereco"));
+                leitor.setStatus(rs.getInt("status"));
+                leitor.setEmail(rs.getString("email"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta(rs.getInt("multa"));
+
+                listaLeitores.add(leitor);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaLeitores;
+    }
+
+    @Override
+    public List<Leitor> buscarAtivos(int offset) {
+
+        String comando = "SELECT * FROM leitor WHERE status = 1 ORDER BY nome ASC limit 9 offset "+offset+";";
+
+        List<Leitor> listaLeitores = new ArrayList<Leitor>();
+
+        Leitor leitor = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+
+                leitor = new Leitor();
+
+                leitor.setId(rs.getInt("idleitor"));
+                leitor.setCpf(rs.getString("cpf"));
+                leitor.setNome(rs.getString("nome"));
+                leitor.setFone(rs.getString("telefone"));
+                leitor.setEndereco(rs.getString("endereco"));
+                leitor.setStatus(rs.getInt("status"));
+                leitor.setEmail(rs.getString("email"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta(rs.getInt("multa"));
+
+                listaLeitores.add(leitor);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaLeitores;
+    }
+
+    @Override
+    public List<Leitor> buscarInativos(int offset) {
+
+        String comando = "SELECT * FROM leitor WHERE status = 3 ORDER BY nome ASC limit 9 offset "+offset+";";
+
+        List<Leitor> listaLeitores = new ArrayList<Leitor>();
+
+        Leitor leitor = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+
+                leitor = new Leitor();
+
+                leitor.setId(rs.getInt("idleitor"));
+                leitor.setCpf(rs.getString("cpf"));
+                leitor.setNome(rs.getString("nome"));
+                leitor.setFone(rs.getString("telefone"));
+                leitor.setEndereco(rs.getString("endereco"));
+                leitor.setStatus(rs.getInt("status"));
+                leitor.setEmail(rs.getString("email"));
+                leitor.setValorMulta(rs.getDouble("valorMulta"));
+                leitor.setMulta(rs.getInt("multa"));
+
+                listaLeitores.add(leitor);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaLeitores;
+    }
+
+    @Override
+    public List<Leitor> buscarComMultas(int offset) {
+
+        String comando = "SELECT * FROM leitor WHERE multa = 1 ORDER BY nome ASC limit 9 offset "+offset+";";
 
         List<Leitor> listaLeitores = new ArrayList<Leitor>();
 

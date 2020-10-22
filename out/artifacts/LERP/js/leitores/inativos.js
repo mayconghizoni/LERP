@@ -2,24 +2,59 @@ LERP.leitores = new Object();
 
 $(document).ready(function () {
 
-    LERP.leitores.buscar = function () {
+    LERP.leitores.buscar = function (pagina, first) {
+
+        if (first){
+            LERP.leitores.montarNavegacao(pagina);
+        }else{
+            var itensPorPag = 9;
+            var offset = (pagina * itensPorPag) - itensPorPag;
+
+            $.ajax({
+                type: "GET",
+                url: "/LERP/rest/leitor/buscarInativos",
+                data: "offset="+offset,
+                success: function (dados) {
+
+                    if (dados == "") {
+                        $("#listaLeitores").html("");
+                    } else {
+                        $("#listaLeitores").html(LERP.leitores.exibir(dados));
+                    }
+
+                },
+                error: function (info) {
+                    LERP.modalAviso("Erro ao buscar leitores: " + info.status + " - " + info.statusText);
+                }
+            })
+        }
+
+
+    }
+
+    LERP.leitores.montarNavegacao = function(pagina){
+
+        status = 3;
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/leitor/buscar",
-            success: function (dados) {
-
-                if (dados == "") {
-                    $("#listaLeitores").html("");
-                } else {
-                    $("#listaLeitores").html(LERP.leitores.exibir(dados));
+            url: "/LERP/rest/leitor/buscar/"+status,
+            success: function(lista){
+                var itensPorPag = 9;
+                var quantidadePaginas = Math.ceil(lista.length / itensPorPag);
+                var paginacao = "";
+                for (x = 0; x < quantidadePaginas; x ++){
+                    paginacao += "<li class=\"page-item\" onclick='LERP.leitores.buscar("+ (x + 1) +","+false+")'><a class=\"page-link\" href=\"#\">" + (x + 1) + "</a></li>"
                 }
+                $("#paginacao").html(paginacao);
 
+                LERP.leitores.buscar(pagina, false);
             },
-            error: function (info) {
-                LERP.modalAviso("Erro ao buscar leitores: " + info.status + " - " + info.statusText);
+            error: function(info){
+                LERP.modalAviso("Erro ao buscar leitores: "+info.status+" - " + info.statusText);
             }
         })
+
     }
 
     LERP.leitores.exibir = function(listaLeitores) {
@@ -29,8 +64,6 @@ $(document).ready(function () {
             var leitor = "<div>";
 
             for (var i = 0; i < listaLeitores.length; i++) {
-
-                if(listaLeitores[i].status == 3){
                     leitor += "<div class=\"card livros\">" +
                         "<div class=\"card-body\">" +
                         "<h5 class=\"card-title\">" + listaLeitores[i].nome + "</h5>" +
@@ -40,8 +73,6 @@ $(document).ready(function () {
                         "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.leitores.ativar('"+listaLeitores[i].id+"')\">Ativar Leitor</button>" +
                         "</div>" +
                         "</div>"
-                }
-
             }
 
             leitor += "</div>";
@@ -52,7 +83,7 @@ $(document).ready(function () {
 
     }
 
-    LERP.leitores.buscar();
+    LERP.leitores.buscar(1, true);
 
     LERP.leitores.visualizar = function (id) {
 

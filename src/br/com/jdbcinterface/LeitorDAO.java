@@ -7,7 +7,11 @@ import java.util.List;
 public interface LeitorDAO {
 
     public boolean inserir(Leitor leitor);
-    public List<Leitor> buscar();
+    public List<Leitor> buscar(int status);
+    public List<Leitor> buscarMultados(int multa);
+    public List<Leitor> buscarAtivos(int offset);
+    public List<Leitor> buscarInativos(int offset);
+    public List<Leitor> buscarComMultas(int offset);
     public Leitor buscarPorId(int id);
     public boolean alterar(Leitor leitor);
     public boolean inativar(int id);

@@ -158,6 +158,13 @@
     width: 50px;
   }
 
+  #paginacao{
+    padding: 10px;
+    margin: auto;
+    position: relative;
+    bottom: 15%
+  }
+
 
 
 

@@ -2,29 +2,62 @@ LERP.exemplares = new Object();
 
 $(document).ready(function ()  {
 
-    LERP.exemplares.buscar = function(){
+    LERP.exemplares.buscar = function(pagina, first){
+
+        if (first){
+            LERP.exemplares.montarNavegacao(pagina);
+        }else{
+            var itensPorPag = 9;
+            var offset = (pagina * itensPorPag) - itensPorPag;
+
+            $.ajax({
+                type: "GET",
+                url: "/LERP/rest/exemplar/buscarAtivos",
+                data: "offset="+offset,
+                success: function(dados){
+
+                    if(dados == ""){
+                        $("#listaExemplares").html("");
+                    }else{
+                        $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+                    }
+
+                },
+                error: function(info){
+                    LERP.modalAviso("Erro ao buscar exemplares: "+info.status+" - " + info.statusText);
+                }
+            })
+        }
+    }
+
+    LERP.exemplares.montarNavegacao = function(pagina){
+
+        status = 1;
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/exemplar/buscar",
-            success: function(dados){
-
-                if(dados == ""){
-                    $("#listaExemplares").html("");
-                }else{
-                    $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+            url: "/LERP/rest/exemplar/buscar/"+status,
+            success: function(listaExemplares){
+                var itensPorPag = 9;
+                var quantidadePaginas = Math.ceil(listaExemplares.length / itensPorPag);
+                var paginacao = "";
+                for (x = 0; x < quantidadePaginas; x ++){
+                    paginacao += "<li class=\"page-item\" onclick='LERP.exemplares.buscar("+ (x + 1) +","+false+")'><a class=\"page-link\" href=\"#\">" + (x + 1) + "</a></li>"
                 }
+                $("#paginacao").html(paginacao);
 
+                LERP.exemplares.buscar(pagina, false);
             },
             error: function(info){
                 LERP.modalAviso("Erro ao buscar exemplares: "+info.status+" - " + info.statusText);
             }
         })
+
     }
 
-    LERP.exemplares.buscar();
+    LERP.exemplares.buscar(1, true);
 
-    LERP.exemplares.exibir = function(listaExemplares) {
+    LERP.exemplares.exibir = function(listaExemplares){
 
         if(listaExemplares != undefined && listaExemplares.length > 0 ) {
 
@@ -32,24 +65,19 @@ $(document).ready(function ()  {
 
             for (var i = 0; i < listaExemplares.length; i++) {
 
-                if(listaExemplares[i].status == 1){
-
-                    exemplar += "<div class=\"card livros\">" +
-                        "<div class=\"card-body\">" +
-                        "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
-                        "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.exemplares.buscarLeitores('"+listaExemplares[i].id+"','"+listaExemplares[i].titulo+"')\">Reserve agora</button>" +
-                        "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.ativarManutencao('"+listaExemplares[i].id+"')\">Manutenção</button>" +
-                        "</div>" +
-                        "</div>"
-                }
-
+                exemplar += "<div class=\"card livros\">" +
+                    "<div class=\"card-body\">" +
+                    "<h5 class=\"card-title\">" + listaExemplares[i].titulo + "</h5>" +
+                    "<p class=\"card-text\">" + listaExemplares[i].autor + "</p>" +
+                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-primary\" onclick=\"LERP.exemplares.buscarLeitores('"+listaExemplares[i].id+"','"+listaExemplares[i].titulo+"')\">Reserve agora</button>" +
+                    "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.ativarManutencao('"+listaExemplares[i].id+"')\">Manutenção</button>" +
+                    "</div>" +
+                    "</div>"
             }
 
             exemplar += "</div>";
 
         }
-
 
         return exemplar;
 
@@ -59,7 +87,7 @@ $(document).ready(function ()  {
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/leitor/buscar",
+            url: "/LERP/rest/leitor/buscarAtivos",
             success: function(leitores) {
 
                 if (leitores!=""){
@@ -147,7 +175,7 @@ $(document).ready(function ()  {
 
                             success: function (msg) {
                                 LERP.modalAviso(msg);
-                                LERP.exemplares.buscar();
+                                LERP.exemplares.buscar(1);
                                 $("#cadastraEmprestimo").trigger("reset");
 
                             },
@@ -186,7 +214,7 @@ $(document).ready(function ()  {
                         url: "/LERP/rest/exemplar/ativarManutencao/"+id,
                         success: function(msg){
                             LERP.modalAviso(msg);
-                            LERP.exemplares.buscar();
+                            LERP.exemplares.buscar(1, false );
                             $("#modalManutencao").dialog("close");
                         },
                         error: function(info){

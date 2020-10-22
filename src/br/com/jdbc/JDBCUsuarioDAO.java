@@ -16,9 +16,81 @@ public class JDBCUsuarioDAO implements UsuarioDAO {
     }
 
     @Override
-    public List<Usuario> buscar() {
+    public List<Usuario> buscar(int status) {
 
-        String comando = "SELECT * FROM usuario ORDER BY nome ASC;";
+        String comando = "SELECT * FROM usuario WHERE status = "+status+" ORDER BY nome ASC;";
+
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+
+        Usuario usuario = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+
+                usuario = new Usuario();
+
+                usuario.setId(rs.getInt("idusuario"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setStatus(rs.getInt("status"));
+
+
+                listaUsuarios.add(usuario);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaUsuarios;
+    }
+
+    @Override
+    public List<Usuario> buscarAtivos(int offset) {
+
+        String comando = "SELECT * FROM usuario WHERE status = 0 ORDER BY nome ASC limit 9 offset "+offset+";";
+
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+
+        Usuario usuario = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+
+                usuario = new Usuario();
+
+                usuario.setId(rs.getInt("idusuario"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setStatus(rs.getInt("status"));
+
+
+                listaUsuarios.add(usuario);
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return listaUsuarios;
+    }
+
+    @Override
+    public List<Usuario> buscarInativos(int offset) {
+
+        String comando = "SELECT * FROM usuario WHERE status = 1 ORDER BY nome ASC limit 9 offset "+offset+";";
 
         List<Usuario> listaUsuarios = new ArrayList<Usuario>();
 

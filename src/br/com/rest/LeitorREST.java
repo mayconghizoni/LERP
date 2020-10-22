@@ -44,10 +44,10 @@ public class LeitorREST extends UtilRest {
     }
 
     @GET
-    @Path("buscar")
+    @Path("buscarMultados/{multa}")
     @Consumes("application/*")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(){
+    public Response buscarMultados(@PathParam("multa") int multa){
 
         try{
 
@@ -56,7 +56,103 @@ public class LeitorREST extends UtilRest {
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
-            listaLeitor = jdbcLeitor.buscar();
+            listaLeitor = jdbcLeitor.buscarMultados(multa);
+
+            return this.buildResponse(listaLeitor);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscar/{status}")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar(@PathParam("status") int status){
+
+        try{
+
+            List<Leitor> listaLeitor = new ArrayList<Leitor>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            listaLeitor = jdbcLeitor.buscar(status);
+
+            return this.buildResponse(listaLeitor);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscarAtivos")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarAtivos(@QueryParam("offset") int offset){
+
+        try{
+
+            List<Leitor> listaLeitor = new ArrayList<Leitor>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            listaLeitor = jdbcLeitor.buscarAtivos(offset);
+
+            return this.buildResponse(listaLeitor);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscarInativos")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarInativos(@QueryParam("offset")int offset){
+
+        try{
+
+            List<Leitor> listaLeitor = new ArrayList<Leitor>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            listaLeitor = jdbcLeitor.buscarInativos(offset);
+
+            return this.buildResponse(listaLeitor);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscarComMultas")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarComMultas(@QueryParam("offset") int offset){
+
+        try{
+
+            List<Leitor> listaLeitor = new ArrayList<Leitor>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCLeitorDAO jdbcLeitor = new JDBCLeitorDAO(conexao);
+            listaLeitor = jdbcLeitor.buscarComMultas(offset);
 
             return this.buildResponse(listaLeitor);
 

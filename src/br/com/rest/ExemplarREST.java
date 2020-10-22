@@ -44,10 +44,10 @@ public class ExemplarREST extends UtilRest{
     }
 
     @GET
-    @Path("buscar")
+    @Path("buscar/{status}")
     @Consumes("application/*")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(){
+    public Response buscar(@PathParam("status") int status){
 
         try{
 
@@ -56,7 +56,53 @@ public class ExemplarREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
-            listaExemplares = jdbcExemplar.buscar();
+            listaExemplares = jdbcExemplar.buscar(status);
+
+            return this.buildResponse(listaExemplares);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("buscarInativos")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarInativos(@QueryParam("offset") int offset){
+
+        try{
+
+            List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+            listaExemplares = jdbcExemplar.buscarInativos(offset);
+
+            return this.buildResponse(listaExemplares);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("buscarAtivos")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarAtivos(@QueryParam("offset") int offset){
+
+        try{
+
+            List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCExemplarDAO jdbcExemplar = new JDBCExemplarDAO(conexao);
+            listaExemplares = jdbcExemplar.buscarAtivos(offset);
 
             return this.buildResponse(listaExemplares);
 

@@ -22,10 +22,10 @@ public class UsuarioREST extends UtilRest{
     HttpServletRequest request;
 
     @GET
-    @Path("buscar")
+    @Path("buscar/{status}")
     @Consumes("application/*")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(){
+    public Response buscar(@PathParam("status") int status){
 
         try{
 
@@ -34,7 +34,57 @@ public class UsuarioREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
-            listaUsuario = jdbcUsuario.buscar();
+            listaUsuario = jdbcUsuario.buscar(status);
+            conec.fecharConexao();
+
+            return this.buildResponse(listaUsuario);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscarAtivos")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarAtivos(@QueryParam("offset")int offset){
+
+        try{
+
+            List<Usuario> listaUsuario = new ArrayList<Usuario>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
+            listaUsuario = jdbcUsuario.buscarAtivos(offset);
+            conec.fecharConexao();
+
+            return this.buildResponse(listaUsuario);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return this.buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscarInativos")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarInativos(@QueryParam("offset")int offset){
+
+        try{
+
+            List<Usuario> listaUsuario = new ArrayList<Usuario>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCUsuarioDAO jdbcUsuario = new JDBCUsuarioDAO(conexao);
+            listaUsuario = jdbcUsuario.buscarInativos(offset);
             conec.fecharConexao();
 
             return this.buildResponse(listaUsuario);

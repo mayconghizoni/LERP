@@ -46,9 +46,85 @@ public class JDBCExemplarDAO implements ExemplarDAO {
     }
 
     @Override
-    public List<Exemplar> buscar() {
+    public List<Exemplar> buscarAtivos(int offset) {
 
-        String comando = "SELECT * FROM exemplares ORDER BY titulo ASC;";
+        String comando = "SELECT * FROM exemplares WHERE status = 1 ORDER BY titulo ASC limit 9 offset "+offset+";";
+
+        List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+        Exemplar exemplar = null;
+
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+                exemplar = new Exemplar();
+
+                exemplar.setId(rs.getInt("idexemplares"));
+                exemplar.setTitulo(rs.getString("titulo"));
+                exemplar.setAutor(rs.getString("autor"));
+                exemplar.setAno(rs.getString("ano"));
+                exemplar.setCategoria(rs.getInt("idcategoria"));
+                exemplar.setEdicao(rs.getString("edicao"));
+                exemplar.setStatus(rs.getInt("status"));
+
+                listaExemplares.add(exemplar);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return listaExemplares;
+
+    }
+
+    @Override
+    public List<Exemplar> buscarInativos(int offset) {
+
+        String comando = "SELECT * FROM exemplares WHERE status = 3 ORDER BY titulo ASC limit 9 offset "+offset+";";
+
+        List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
+
+        Exemplar exemplar = null;
+
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while(rs.next()){
+                exemplar = new Exemplar();
+
+                exemplar.setId(rs.getInt("idexemplares"));
+                exemplar.setTitulo(rs.getString("titulo"));
+                exemplar.setAutor(rs.getString("autor"));
+                exemplar.setAno(rs.getString("ano"));
+                exemplar.setCategoria(rs.getInt("idcategoria"));
+                exemplar.setEdicao(rs.getString("edicao"));
+                exemplar.setStatus(rs.getInt("status"));
+
+                listaExemplares.add(exemplar);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return listaExemplares;
+
+    }
+
+    @Override
+    public List<Exemplar> buscar(int status) {
+
+        String comando = "SELECT * FROM exemplares WHERE status = "+status+" ORDER BY titulo ASC;";
 
         List<Exemplar> listaExemplares = new ArrayList<Exemplar>();
 

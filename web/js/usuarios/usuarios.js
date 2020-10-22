@@ -2,28 +2,60 @@ LERP.usuario = new Object();
 
 $(document).ready(function () {
 
-    LERP.usuario.buscar = function () {
+    LERP.usuario.buscar = function (pagina, first) {
+
+        if (first){
+            LERP.usuario.montarNavegacao(pagina);
+        }else{
+            var itensPorPag = 9;
+            var offset = (pagina * itensPorPag) - itensPorPag;
+            $.ajax({
+                type: "GET",
+                url: "/LERP/rest/usuario/buscarAtivos",
+                data: "offset="+offset,
+                success: function (dados) {
+
+                    if (dados == "") {
+                        $("#listaUsuario").html("");
+                    } else {
+                        $("#listaUsuario").html(LERP.usuario.exibir(dados));
+                    }
+
+                },
+                error: function (info) {
+                    LERP.modalAviso("Erro ao buscar usuários: " + info.status + " - " + info.statusText);
+                }
+            })
+        }
+
+    }
+
+    LERP.usuario.montarNavegacao = function(pagina){
+
+        status = 0;
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/usuario/buscar",
-            success: function (dados) {
-
-                if (dados == "") {
-                    $("#listaUsuario").html("");
-                } else {
-                    $("#listaUsuario").html(LERP.usuario.exibir(dados));
+            url: "/LERP/rest/usuario/buscar/"+status,
+            success: function(lista){
+                var itensPorPag = 9;
+                var quantidadePaginas = Math.ceil(lista.length / itensPorPag);
+                var paginacao = "";
+                for (x = 0; x < quantidadePaginas; x ++){
+                    paginacao += "<li class=\"page-item\" onclick='LERP.usuario.buscar("+ (x + 1) +","+false+")'><a class=\"page-link\" href=\"#\">" + (x + 1) + "</a></li>"
                 }
+                $("#paginacao").html(paginacao);
 
+                LERP.usuario.buscar(pagina, false);
             },
-            error: function (info) {
-                LERP.modalAviso("Erro ao buscar usuários: " + info.status + " - " + info.statusText);
+            error: function(info){
+                LERP.modalAviso("Erro ao buscar usuários: "+info.status+" - " + info.statusText);
             }
         })
 
     }
 
-    LERP.usuario.buscar();
+    LERP.usuario.buscar(1, true);
 
     LERP.usuario.exibir = function(listaUsuario) {
 
@@ -130,7 +162,7 @@ $(document).ready(function () {
                 data: JSON.stringify(usuario),
                 success: function (msg) {
                     LERP.modalAviso(msg);
-                    LERP.usuario.buscar()
+                    LERP.usuario.buscar(1, true)
                     $("#editaUsuario").trigger("reset");
                 },
                 error: function (info) {
@@ -156,7 +188,7 @@ $(document).ready(function () {
                         success: function (msg) {
                             LERP.modalAviso(msg);
                             $("#modalInativarUsuario").dialog("close");
-                            LERP.usuario.buscar();
+                            LERP.usuario.buscar(1, true);
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);

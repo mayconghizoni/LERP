@@ -2,37 +2,67 @@ LERP.exemplares = new Object();
 
 $(document).ready(function () {
 
-    LERP.exemplares.buscar = function(){
+    LERP.exemplares.buscarInativos = function(pagina, first){
+
+        if (first){
+            LERP.exemplares.montarNavegacao(pagina);
+        }else{
+            var itensPorPag = 9;
+            var offset = (pagina * itensPorPag) - itensPorPag;
+
+            $.ajax({
+                type: "GET",
+                url: "/LERP/rest/exemplar/buscarInativos",
+                data: "offset="+offset,
+                success: function(dados){
+
+                    if(dados == ""){
+                        $("#listaExemplares").html("");
+                    }else{
+                        $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+                    }
+
+                },
+                error: function(info){
+                    LERP.modalAviso("Erro ao buscar exemplares: "+info.status+" - " + info.statusText);
+                }
+            })
+        }
+
+    }
+
+    LERP.exemplares.montarNavegacao = function(pagina){
+
+        status = 3;
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/exemplar/buscar",
-            success: function(dados){
-
-                if(dados == ""){
-                    $("#listaExemplares").html("");
-                }else{
-                    $("#listaExemplares").html(LERP.exemplares.exibir(dados));
+            url: "/LERP/rest/exemplar/buscar/"+status,
+            success: function(listaExemplares){
+                var itensPorPag = 9;
+                var quantidadePaginas = Math.ceil(listaExemplares.length / itensPorPag);
+                var paginacao = "";
+                for (x = 0; x < quantidadePaginas; x ++){
+                    paginacao += "<li class=\"page-item\" onclick='LERP.exemplares.buscarInativos("+ (x + 1) +","+false+")'><a class=\"page-link\" href=\"#\">" + (x + 1) + "</a></li>"
                 }
+                $("#paginacao").html(paginacao);
 
+                LERP.exemplares.buscarInativos(pagina, false);
             },
             error: function(info){
                 LERP.modalAviso("Erro ao buscar exemplares: "+info.status+" - " + info.statusText);
             }
         })
+
     }
 
-    LERP.exemplares.buscar();
-
-    LERP.exemplares.exibir = function(listaExemplares) {
+    LERP.exemplares.exibir = function(listaExemplares){
 
         if(listaExemplares != undefined && listaExemplares.length > 0 ) {
 
             var exemplar = "<div>";
 
             for (var i = 0; i < listaExemplares.length; i++) {
-
-                if(listaExemplares[i].status == 3){
 
                     exemplar += "<div class=\"card livros\">" +
                         "<div class=\"card-body\">" +
@@ -42,8 +72,6 @@ $(document).ready(function () {
                         "<button type=\"button\" href=\"#\" class=\"btn btn-margin btn-outline-secondary\" onclick=\"LERP.exemplares.excluir('"+listaExemplares[i].id+"')\">Descartar</button>" +
                         "</div>" +
                         "</div>"
-
-                }
             }
 
             exemplar += "</div>";
@@ -53,6 +81,8 @@ $(document).ready(function () {
         return exemplar;
 
     }
+
+    LERP.exemplares.buscarInativos(1, true);
 
     LERP.exemplares.excluir = function (id) {
 
@@ -69,7 +99,7 @@ $(document).ready(function () {
                         success: function (msg) {
                             LERP.modalAviso(msg);
                             $("#modalExcluirExemplar").dialog("close");
-                            LERP.exemplares.buscar();
+                            LERP.exemplares.buscarInativos(1, false);
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);

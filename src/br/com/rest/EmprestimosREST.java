@@ -74,10 +74,10 @@ public class EmprestimosREST extends UtilRest{
     }
 
     @GET
-    @Path("buscar")
+    @Path("buscarTotal")
     @Consumes("application/*")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(){
+    public Response buscarTotal(){
 
         try{
 
@@ -86,7 +86,31 @@ public class EmprestimosREST extends UtilRest{
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
-            listaEmprestimos = jdbcEmprestimo.buscar();
+            listaEmprestimos = jdbcEmprestimo.buscarTotal();
+
+            return this.buildResponse(listaEmprestimos);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return buildErrorResponse(e.getMessage());
+        }
+
+    }
+
+    @GET
+    @Path("buscar")
+    @Consumes("application/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscar(@QueryParam("offset") int offset){
+
+        try{
+
+            List<Emprestimo> listaEmprestimos = new ArrayList<Emprestimo>();
+
+            Conexao conec = new Conexao();
+            Connection conexao = conec.abrirConexao();
+            JDBCEmprestimoDAO jdbcEmprestimo = new JDBCEmprestimoDAO(conexao);
+            listaEmprestimos = jdbcEmprestimo.buscar(offset);
 
             return this.buildResponse(listaEmprestimos);
 

@@ -2,24 +2,55 @@ LERP.emprestimos = new Object();
 
 $(document).ready(function () {
 
-    LERP.emprestimos.buscar = function () {
+    LERP.emprestimos.buscar = function (pagina, first) {
+
+        if (first){
+            LERP.emprestimos.montarNavegacao(pagina)
+        }else{
+            var itensPorPag = 9;
+            var offset = (pagina * itensPorPag) - itensPorPag;
+            $.ajax({
+                type: "GET",
+                url: "/LERP/rest/emprestimo/buscar",
+                data: "offset="+offset,
+                success: function(dados){
+
+                    console.log(dados)
+
+                    if(dados == ""){
+                        $("#listaEmprestimos").html("");
+                    }else{
+
+                        $("#listaEmprestimos").html(LERP.emprestimos.exibir(dados));
+                    }
+
+                },
+                error: function(info){
+                    LERP.modalAviso("Erro ao buscar exemplares: "+info.status+" - " + info.statusText);
+                }
+            })
+        }
+
+    }
+
+    LERP.emprestimos.montarNavegacao = function (pagina){
+
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/emprestimo/buscar",
-            success: function(dados){
-
-                console.log(dados)
-
-                if(dados == ""){
-                    $("#listaEmprestimos").html("");
-                }else{
-
-                    $("#listaEmprestimos").html(LERP.emprestimos.exibir(dados));
+            url: "/LERP/rest/emprestimo/buscarTotal",
+            success: function(lista){
+                var itensPorPag = 9;
+                var quantidadePaginas = Math.ceil(lista.length / itensPorPag);
+                var paginacao = "";
+                for (x = 0; x < quantidadePaginas; x ++){
+                    paginacao += "<li class=\"page-item\" onclick='LERP.emprestimos.buscar("+ (x + 1) +","+false+")'><a class=\"page-link\" href=\"#\">" + (x + 1) + "</a></li>"
                 }
+                $("#paginacao").html(paginacao);
 
+                LERP.emprestimos.buscar(pagina, false);
             },
             error: function(info){
-                LERP.modalAviso("Erro ao buscar exemplares: "+info.status+" - " + info.statusText);
+                LERP.modalAviso("Erro ao buscar usuários: "+info.status+" - " + info.statusText);
             }
         })
     }
@@ -53,7 +84,7 @@ $(document).ready(function () {
 
     }
 
-    LERP.emprestimos.buscar();
+    LERP.emprestimos.buscar(1, true);
 
     LERP.emprestimos.finalizarEmprestimo = function (id) {
 
@@ -68,7 +99,7 @@ $(document).ready(function () {
                         url: "/LERP/rest/emprestimo/finalizar/"+id,
                         success: function(msg){
                             LERP.modalAviso(msg);
-                            LERP.emprestimos.buscar();
+                            LERP.emprestimos.buscar(1, true);
                             $("#modalEmprestimo").dialog("close");
                         },
                         error: function(info){
@@ -103,7 +134,7 @@ $(document).ready(function () {
                         url: "/LERP/rest/emprestimo/maisSete/"+id,
                         success: function(msg){
                             LERP.modalAviso(msg);
-                            LERP.emprestimos.buscar();
+                            LERP.emprestimos.buscar(1, true);
                             $("#modalProrrogar").dialog("close");
                         },
                         error: function(info){

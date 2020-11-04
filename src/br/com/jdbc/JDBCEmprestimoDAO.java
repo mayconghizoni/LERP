@@ -126,6 +126,62 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
     }
 
     @Override
+    public boolean adicionarHistorico(int id) {
+
+        String comando = "SELECT emp.*, l.nome, ex.titulo, ex.idcategoria FROM emprestimos as emp INNER JOIN leitor as l on leitor_idleitor = idleitor inner join exemplares as ex on exemplar_idexemplar = idexemplares  WHERE idemprestimos = "+id+" ORDER BY dataSaida ASC;";
+
+        Emprestimo emprestimo = null;
+
+        try{
+
+            Statement stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery(comando);
+
+            while (rs.next()){
+
+                emprestimo = new Emprestimo();
+
+                emprestimo.setId(rs.getInt("idemprestimos"));
+                emprestimo.setIdLivro(rs.getInt("exemplar_idexemplar"));
+                emprestimo.setIdLeitor(rs.getInt("leitor_idleitor"));
+                emprestimo.setDataSaida(rs.getString("dataSaida"));
+                emprestimo.setDataDev(rs.getString("datadev"));
+                emprestimo.setNomeLeitor(rs.getString("nome"));
+                emprestimo.setTituloExemplar(rs.getString("titulo"));
+                emprestimo.setIdCategoria(rs.getInt("idcategoria"));
+
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        String sql = "INSERT INTO historico_emprestimos (idExemplar, tituloExemplar, idCategoria, dataSaida, dataDev) VALUES (? , ? , ?, ?, ?);";
+
+        PreparedStatement p;
+
+        try {
+
+            p = this.conexao.prepareStatement(sql);
+
+            p.setInt(1, emprestimo.getIdLivro());
+            p.setString(2, emprestimo.getTituloExemplar());
+            p.setInt(3, emprestimo.getIdCategoria());
+            p.setString(4, emprestimo.getDataSaida());
+            p.setString(5, emprestimo.getDataDev());
+
+            p.execute();
+
+            return true;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
     public List<Emprestimo> buscar(int offset) {
 
         String comando = "SELECT emp.*, l.nome, ex.titulo  FROM emprestimos as emp INNER JOIN leitor as l on leitor_idleitor = idleitor inner join exemplares as ex on exemplar_idexemplar = idexemplares ORDER BY dataSaida ASC limit 9 offset "+offset+";";

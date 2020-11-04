@@ -146,6 +146,7 @@ public class EmprestimosREST extends UtilRest{
                 jdbcLeitor.adicionarMulta(valor, id);
             }
 
+            boolean adicionadoHistorico = jdbcEmprestimo.adicionarHistorico(id);
             boolean retorno = jdbcEmprestimo.finalizar(id);
 
             conec.fecharConexao();

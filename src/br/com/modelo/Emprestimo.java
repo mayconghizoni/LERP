@@ -14,6 +14,15 @@ public class Emprestimo {
     private double valorMulta;
     private String nomeLeitor;
     private String tituloExemplar;
+    private int idCategoria;
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
     public String getDataDev() {
         return dataDev;

@@ -13,39 +13,24 @@
 <div class="card sub-conteudo">
     <div class="card-body" id="body-emprestimos">
 
-        <form>
-            <div class="form-group">
-                <label for="inputCategoria">Tipo de relatório</label>
-                <select id="inputCategoria" class="form-control">
-                    <option>Selecione o tipo de relatório</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
-            </div>
+        <form name="frmRelatorio">
 
             <div class="form-row">
-                <div class="form-group col">
+                <div class="form-group col-lg-2">
                     <label for="dataInicio">Data Início</label>
-                    <!-- Carregado por JS -->
-                    <input class="form-control" id="dataInicio">
+                    <input class="form-control" id="dataInicio" type="date" name="dataInicio">
                 </div>
-                <div class="form-group col">
+                <div class="form-group col-lg-2">
                     <label for="dataFim">Data Fim</label>
-                    <!-- Carregado por JS -->
-                    <input class="form-control" id="dataFim">
+                    <input class="form-control" id="dataFim" type="date" name="dataFim">
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="inputEmail">Email destino</label>
-                <input type="text" class="form-control" id="inputEmail" placeholder="creuza_megafunk2009@hotmail.com">
-            </div>
-
-            <button type="submit" class="btn btn-outline-primary">Enviar</button>
-            <button type="submit" class="btn btn-outline-secondary">Visualizar relatório</button>
+            <button type="button" class="btn btn-outline-primary" onclick="LERP.relatorios.buscarDados()">Gerar relatório</button>
         </form>
 
     </div>
 </div>
+
+<script src="../../js/jsPDF/jspdf.es.min.js"></script>
+<script src="../../js/relatorios/relatorios.js"></script>

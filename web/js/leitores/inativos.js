@@ -251,7 +251,8 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/LERP/rest/leitor/buscarPorNome",
-            data: "valorBusca="+valorBusca,
+            data: "va" +
+                "lorBusca="+valorBusca,
             success: function (dados) {
 
                 $("#listaLeitores").html(LERP.leitores.exibir(dados));

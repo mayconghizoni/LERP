@@ -31,6 +31,42 @@
 
     </div>
 </div>
+<div id="imagemGerada" style="display: none">
+    <div id="target" style="width: 100%">
+        <fieldset>
+            <div id="header-relatorio" style="display: flex; flex-direction: row">
+                <div id="logo-relatorio">
+                    <img src="../../imgs/logo.png" style="width: 100px; height: 180px">
+                </div>
+                <div id="data-relatorio" style="margin: auto; text-align: center">
+                    <strong><span id="date" style="font-family: sans-serif"></span></strong>
+                    <hr>
+                    <strong><span id="none-ong" style="font-family: sans-serif">Digite o nome da ong (não sei)</span></strong>
+                </div>
+            </div>
+            <hr>
+            <div id="body-relatorio">
+                <div id="informacoes-relatorio" style="display: flex; flex-direction: row">
+                    <span id="inicio-periodo-relatorio"></span>
+                    <hr>
+                    <span id="fim-periodo-relatorio"></span>
+                    <hr>
+                    <span>Cód. emissão: 3</span>
+                    <hr>
+                </div>
+                <hr>
+                <div id="conteudo-relatorio">
 
-<script src="../../js/jsPDF/jspdf.es.min.js"></script>
+                </div>
+            </div>
+            <hr>
+            <div id="footer-relatorio" style="display: flex; flex-direction: row">
+                <span style="margin: auto">Joinville</span>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<script src="../../js/html2canvas/html2canvas.min.js"></script>
+<script src="../../js/jsPDF/jspdf.min.js"></script>
 <script src="../../js/relatorios/relatorios.js"></script>

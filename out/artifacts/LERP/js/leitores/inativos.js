@@ -191,7 +191,7 @@ $(document).ready(function () {
                 url: "/LERP/rest/leitor/alterar",
                 data: JSON.stringify(leitor),
                 success: function (msg) {
-                    LERP.leitores.buscar()
+                    LERP.leitores.buscar(1, true)
                     LERP.modalAviso(msg);
                     $("#editaLeitor").trigger("reset");
 
@@ -220,7 +220,7 @@ $(document).ready(function () {
                         success: function (msg) {
                             LERP.modalAviso(msg);
                             $("#modalAtivarLeitor").dialog("close");
-                            LERP.leitores.buscar();
+                            LERP.leitores.buscar(1, true);
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);

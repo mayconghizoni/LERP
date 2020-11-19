@@ -46,7 +46,6 @@ public class RelatorioREST extends UtilRest{
 
         try{
 
-
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCRelatorioDAO jdbcRelatorio = new JDBCRelatorioDAO(conexao);

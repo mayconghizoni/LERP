@@ -28,8 +28,6 @@ public class JDBCRelatorioDAO implements RelatorioDAO {
         List<Relatorio> listaRelatorio = new ArrayList<Relatorio>();
         Relatorio relatorio = null;
 
-        System.out.println(comando);
-
         try{
 
             Statement stmt = conexao.createStatement();
@@ -45,6 +43,7 @@ public class JDBCRelatorioDAO implements RelatorioDAO {
                 relatorio.setIdCategoria(rs.getInt("idCategoria"));
                 relatorio.setDataSaida(rs.getString("dataSaida"));
                 relatorio.setDataDev(rs.getString("dataDev"));
+                relatorio.setDescricaoCategoria(rs.getString("descCategoria"));
 
                 listaRelatorio.add(relatorio);
 
@@ -53,6 +52,9 @@ public class JDBCRelatorioDAO implements RelatorioDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
+
+
+
 
         return listaRelatorio;
     }
@@ -82,8 +84,10 @@ public class JDBCRelatorioDAO implements RelatorioDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
+
         grafico.setCategoria(categorias);
         grafico.setQuantidade(quantidades);
+
         return grafico;
     }
 

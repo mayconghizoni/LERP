@@ -1,7 +1,5 @@
 package br.com.modelo;
 
-import java.util.GregorianCalendar;
-
 public class Emprestimo {
 
     private  static final long serialVersionUID = 1L;
@@ -15,6 +13,15 @@ public class Emprestimo {
     private String nomeLeitor;
     private String tituloExemplar;
     private int idCategoria;
+    private String descricaoCategoria;
+
+    public String getDescricaoCategoria() {
+        return descricaoCategoria;
+    }
+
+    public void setDescricaoCategoria(String descricaoCategoria) {
+        this.descricaoCategoria = descricaoCategoria;
+    }
 
     public int getIdCategoria() {
         return idCategoria;

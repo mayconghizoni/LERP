@@ -128,7 +128,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
     @Override
     public boolean adicionarHistorico(int id) {
 
-        String comando = "SELECT emp.*, l.nome, ex.titulo, ex.idcategoria FROM emprestimos as emp INNER JOIN leitor as l on leitor_idleitor = idleitor inner join exemplares as ex on exemplar_idexemplar = idexemplares  WHERE idemprestimos = "+id+" ORDER BY dataSaida ASC;";
+        String comando = "SELECT emp.*, l.nome, ex.titulo, ex.idcategoria, c.descricao FROM emprestimos as emp INNER JOIN leitor as l on leitor_idleitor = idleitor inner join exemplares as ex on exemplar_idexemplar = idexemplares inner join categoria as c on ex.idcategoria = c.idcategoria WHERE idemprestimos = "+id+" ORDER BY dataSaida ASC;";
 
         Emprestimo emprestimo = null;
 
@@ -149,6 +149,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
                 emprestimo.setNomeLeitor(rs.getString("nome"));
                 emprestimo.setTituloExemplar(rs.getString("titulo"));
                 emprestimo.setIdCategoria(rs.getInt("idcategoria"));
+                emprestimo.setDescricaoCategoria(rs.getString("descricao"));
 
             }
 
@@ -156,7 +157,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
             e.printStackTrace();
         }
 
-        String sql = "INSERT INTO historico_emprestimos (idExemplar, tituloExemplar, idCategoria, dataSaida, dataDev) VALUES (? , ? , ?, ?, ?);";
+        String sql = "INSERT INTO historico_emprestimos (idExemplar, tituloExemplar, idCategoria, dataSaida, dataDev, descCategoria) VALUES (? , ? , ?, ?, ?, ?);";
 
         PreparedStatement p;
 
@@ -169,6 +170,7 @@ public class JDBCEmprestimoDAO implements EmprestimoDAO {
             p.setInt(3, emprestimo.getIdCategoria());
             p.setString(4, emprestimo.getDataSaida());
             p.setString(5, emprestimo.getDataDev());
+            p.setString(6, emprestimo.getDescricaoCategoria());
 
             p.execute();
 

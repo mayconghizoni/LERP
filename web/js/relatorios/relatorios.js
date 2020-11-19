@@ -34,13 +34,14 @@ $(document).ready(function ()  {
     }
 
     LERP.relatorios.geraHTML= function (dados){
+
         $("#date").html(LERP.relatorios.pegaDataAtual())
         $("#inicio-periodo-relatorio").html("Inicio do periodo: " + LERP.relatorios.formataData(document.frmRelatorio.dataInicio.value));
         $("#fim-periodo-relatorio").html("Fim do periodo: " + LERP.relatorios.formataData(document.frmRelatorio.dataFim.value));
 
 
         var html = "<fieldset>"
-        html += "<table style=\"width:100%; border: 1px solid black;\">\n" +
+        html += "<table style=\"width:100%; border: 1px solid #000000;\">\n" +
                 "<tr>\n" +
                 "<th>Exemplar</th>\n" +
                 "<th>Categoria</th>\n" +
@@ -52,7 +53,7 @@ $(document).ready(function ()  {
         for(i=0; i < dados.length; i++){
             html += "<tr>\n" +
                     "<td>"+dados[i].tituloExemplar+"</td>\n" +
-                    "<td>"+dados[i].idCategoria+"</td>\n" +
+                    "<td>"+dados[i].descricaoCategoria+"</td>\n" +
                     "<td>"+dados[i].dataSaida+"</td>\n" +
                     "<td>"+dados[i].dataDev+"</td>\n" +
                     "</tr>\n";
@@ -66,8 +67,7 @@ $(document).ready(function ()  {
     LERP.relatorios.abreModalRelatorio = function(){
         var modalVisualizarRelatorio = {
             title: "Visualizar relatório",
-            height: 750,
-            width: 700,
+            width: 750,
             buttons:{
                 "Download" : function () {
                     LERP.relatorios.geraRelatorio()
@@ -87,8 +87,8 @@ $(document).ready(function ()  {
         html2canvas(document.querySelector("#imagemGerada")).then(canvas => {
             var imgData = canvas.toDataURL('image/png');
             var doc = new jsPDF();
-            doc.addImage(imgData, 'PNG', 10, 10);
-            doc.save('relatório.pdf');
+            doc.addImage(imgData, 'PNG', 15, 10);
+            doc.save('relatorio.pdf');
         });
 
     }

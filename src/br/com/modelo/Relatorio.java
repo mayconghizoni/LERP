@@ -10,8 +10,17 @@ public class Relatorio implements Serializable{
     private int idExemplar;
     private String tituloExemplar;
     private int idCategoria;
+    private String descricaoCategoria;
     private String dataSaida;
     private String dataDev;
+
+    public String getDescricaoCategoria() {
+        return descricaoCategoria;
+    }
+
+    public void setDescricaoCategoria(String descricaoCategoria) {
+        this.descricaoCategoria = descricaoCategoria;
+    }
 
     public int getIdRelatorio() {
         return idRelatorio;

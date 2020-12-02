@@ -36,19 +36,21 @@ $(document).ready(function ()  {
     LERP.relatorios.geraHTML= function (dados){
 
         $("#date").html(LERP.relatorios.pegaDataAtual())
-        $("#inicio-periodo-relatorio").html("Inicio do periodo: " + LERP.relatorios.formataData(document.frmRelatorio.dataInicio.value));
-        $("#fim-periodo-relatorio").html("Fim do periodo: " + LERP.relatorios.formataData(document.frmRelatorio.dataFim.value));
+        $("#inicio-periodo-relatorio").html("Dê: " + LERP.relatorios.formataData(document.frmRelatorio.dataInicio.value));
+        $("#fim-periodo-relatorio").html("Até: " + LERP.relatorios.formataData(document.frmRelatorio.dataFim.value));
 
 
         var html = "<fieldset>"
         html += "<table style=\"width:100%; border: 1px solid #000000;\">\n" +
                 "<tr>\n" +
-                "<th>Exemplar</th>\n" +
+                "<th>Título</th>\n" +
                 "<th>Categoria</th>\n" +
-                "<th>Data Saida</th>\n" +
-                "<th>Data devolução</th>\n" +
+                "<th>Saida</th>\n" +
+                "<th>Devolução</th>\n" +
                 "</tr>\n" +
                 "</hr>\n";
+
+        var total = 0;
 
         for(i=0; i < dados.length; i++){
             html += "<tr>\n" +
@@ -57,7 +59,10 @@ $(document).ready(function ()  {
                     "<td>"+dados[i].dataSaida+"</td>\n" +
                     "<td>"+dados[i].dataDev+"</td>\n" +
                     "</tr>\n";
+
+            total = total + 1;
         }
+        $("#total-emprestimos").html("Total de empréstimos: "+total);
         html += "</table>"
         html += "</fieldset>"
         $("#conteudo-relatorio").html(html)
@@ -153,6 +158,10 @@ $(document).ready(function ()  {
                 }]
             },
             options: {
+                title: {
+                    display: true,
+                    text: 'Movimentação de exemplares por categoria',
+                },
                 scales: {
                     yAxes: [{
                         ticks: {

@@ -25,8 +25,8 @@
                     <input class="form-control" id="dataFim" type="date" name="dataFim">
                 </div>
             </div>
-            <button type="button" class="btn btn-outline-primary" onclick="LERP.relatorios.buscarDadosGrafico()">Gerar gráfico</button>
             <button type="button" class="btn btn-outline-primary" onclick="LERP.relatorios.buscarDados()">Gerar relatório</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="LERP.relatorios.buscarDadosGrafico()">Gerar gráfico</button>
         </form>
 
     </div>
@@ -47,6 +47,8 @@
                     <strong><span id="date" style="font-family: sans-serif"></span></strong>
                     <hr>
                     <strong><span id="none-ong" style="font-family: sans-serif">Sala Arco Íris</span></strong>
+                    <hr>
+                    <strong><span id="title-relatorio" style="font-family: sans-serif">Movimentação de exemplares</span></strong>
                 </div>
             </div>
             <hr>
@@ -56,13 +58,11 @@
                     <hr>
                     <span id="fim-periodo-relatorio"></span>
                     <hr>
-                    <span>Cód. emissão: 3</span>
+                    <span id="total-emprestimos"></span>
                     <hr>
                 </div>
                 <hr>
-                <div id="conteudo-relatorio">
-
-                </div>
+                <div id="conteudo-relatorio"></div>
             </div>
             <hr>
             <div id="footer-relatorio" style="display: flex; flex-direction: row">

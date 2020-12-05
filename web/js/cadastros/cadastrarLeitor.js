@@ -18,9 +18,6 @@ LERP.cadastros = new Object()
     var cpf = leitor.cpf
     var expRegCpf = new RegExp("^[0-9]{3}[.]{1}[0-9]{3}[.]{1}[0-9]{3}[-]{1}[0-9]{2}$")
 
-    var endereco = leitor.endereco
-    var expRegEndereco = new RegExp("^[A-zÀ-ü]{3,}[,]{1}[ ]{1}[1-9]{1,}$");
-
     var email = leitor.email;
     var expRegEmail = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")
 
@@ -44,7 +41,7 @@ LERP.cadastros = new Object()
         document.frmVisualizaEdicao.inputCpf.focus()
         return false
     }
-    else if (!expRegEndereco.test(endereco)){
+    else if (leitor.endereco == "" || leitor.endereco==undefined){
         LERP.modalAviso("Preencha o campo Endereço.")
         document.frmVisualizaEdicao.inputEndereco.focus()
         return false

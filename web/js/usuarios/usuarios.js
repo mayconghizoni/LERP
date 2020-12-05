@@ -187,8 +187,8 @@ $(document).ready(function () {
                         url: "/LERP/rest/usuario/inativar/"+id,
                         success: function (msg) {
                             LERP.modalAviso(msg);
-                            $("#modalInativarUsuario").dialog("close");
                             LERP.usuario.buscar(1, true);
+                            $("#modalInativarUsuario").dialog("close");
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);

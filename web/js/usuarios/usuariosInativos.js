@@ -192,8 +192,8 @@ $(document).ready(function () {
                         url: "/LERP/rest/usuario/ativar/"+id,
                         success: function (msg) {
                             LERP.modalAviso(msg);
+                            LERP.perfil.buscar(1, true);
                             $("#modalAtivarUsuario").dialog("close");
-                            LERP.perfil.buscar(1, trues);
                         },
                         error: function (info) {
                             LERP.modalAviso(info.responseText);

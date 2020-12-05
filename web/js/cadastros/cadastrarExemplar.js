@@ -90,9 +90,6 @@ cadastrarNovoExemplar = function () {
     exemplar.ano = document.frmAddExemplar.inputAno.value;
     exemplar.edicao = document.frmAddExemplar.inputEdicao.value;
 
-    var titulo = exemplar.titulo
-    var expRegTitulo = new RegExp("^[A-zÀ-ü]{3,}$")
-
     var autor = exemplar.autor
     var expRegAutor = new RegExp("^[A-zÀ-ü]{3,}([ ]{1}[A-zÀ-ü]{2,})+$")
 
@@ -102,7 +99,7 @@ cadastrarNovoExemplar = function () {
     var edicao = exemplar.edicao
     var expRegEdicao = new RegExp("^[1-9]{1,3}$")
 
-    if(!expRegTitulo.test(titulo)){
+    if(exemplar.titulo == "" || exemplar.titulo == undefined){
         LERP.modalAviso("Preencha o campo Titulo.")
         document.frmAddExemplar.inputObra.focus()
         return false

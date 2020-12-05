@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/exemplar/buscar",
+            url: "/LERP/rest/exemplar/buscar/1",
             success: function(exemplares) {
 
                 if (exemplares!=""){
@@ -65,7 +65,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "GET",
-            url: "/LERP/rest/leitor/buscar",
+            url: "/LERP/rest/leitor/buscar/1",
             success: function(leitores) {
 
                 if (leitores!=""){

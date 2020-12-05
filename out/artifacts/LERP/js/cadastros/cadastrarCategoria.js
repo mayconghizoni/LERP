@@ -4,10 +4,7 @@ cadastrarNovaCategoria = function () {
     var categoria = new Object();
     categoria.nome = document.frmAddCategoria.inputCategoria.value;
 
-    var cate = categoria.nome
-    var expRegCategoria = new RegExp("^[A-zÀ-ü]{3,}$")
-
-    if(!expRegCategoria.test(cate)){
+    if(categoria.nome == "" || categoria.nome == undefined){
         LERP.modalAviso("Preencha o campo Categoria.")
         document.frmAddCategoria.inputCategoria.focus()
         return false
